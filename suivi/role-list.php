@@ -1,9 +1,7 @@
-<?php include("session.php"); ?>
+<?php include("session.php"); 
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-
-<!-- Mirrored from educate.frontted.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Sep 2020 02:18:07 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -32,6 +30,10 @@
     <!-- ion Range Slider -->
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.rtl.css" rel="stylesheet">
+
+    <!-- datatable -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -107,7 +109,10 @@
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Dashboard</h1>
+                        <div class="row">
+                            <div class="col col-md-6"><h1 class="mb-0">Add new role</h1></div>
+                            <div class="col col-md-6"><a href="role-add.php" class="btn btn-primary float-right">add role</a></div>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -116,63 +121,37 @@
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="activity_all">
                             <!-- FIRST TAB CONTENT -->
-                            <div class="row card-group-row">
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted mb-2 d-flex">Current Month
-                                                    <span class="badge badge-warning ml-2">391</span></div>
-                                                <span class="h4 m-0">&dollar;24,000 <small class="text-muted"> /
-                                                        &dollar;50,000</small> </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">monetization_on</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%;"
-                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted d-flex mb-2">Current Year
-                                                    <span class="badge badge-primary ml-2">2019</span></div>
-                                                <span class="h4 m-0">&dollar;48,229 </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">gps_fixed</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%;"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted mb-2">Top Grossing</div>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="h4 m-0">&dollar;13,531 </div>
-                                                    <div class="progress ml-1" style="width:100%;height: 3px;">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">contacts</i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
+                                                <th>Salary</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tiger Nixon</td>
+                                                <td>System Architect</td>
+                                                <td>Edinburgh</td>
+                                                <td>61</td>
+                                                <td>2011/04/25</td>
+                                                <td>$320,800</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Garrett Winters</td>
+                                                <td>Accountant</td>
+                                                <td>Tokyo</td>
+                                                <td>63</td>
+                                                <td>2011/07/25</td>
+                                                <td>$170,750</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
 
                             <!-- END FIRST TAB CONTENT -->
                         </div>
@@ -210,7 +189,10 @@
     </div>
     <!-- // END drawer-layout -->
 
-
+    <script>
+        $(document).ready(function() {
+        $('#example').DataTable();} );
+    </script>
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
 
@@ -264,6 +246,10 @@
     <!-- Chart Samples -->
     <script src="assets/js/page.analytics.js"></script>
 
+    <!-- datatable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
 </body>
 

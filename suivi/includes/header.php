@@ -1,3 +1,4 @@
+<?php include("../includes/session.php"); ?>
         <div class="mdk-header-layout js-mdk-header-layout" data-has-scrolling-region>
 
                 <!-- Header -->
@@ -81,7 +82,7 @@
                                                             <small class="text-muted">2 minutes ago</small>
                                                         </div>
                                                     </div>
-
+ 
                                                     <div class="dropdown-item d-flex">
                                                         <div class="mr-3">
                                                             <div class="avatar avatar-xs">
@@ -194,8 +195,8 @@
                                                     alt="avatar">
                                             </span>
                                             <span class="flex d-flex flex-column">
-                                                <strong class="h5 m-0">Adrian D.</strong>
-                                                <small class="text-muted text-uppercase">STUDENT</small>
+                                                <strong class="h5 m-0"><?php echo $names; ?></strong>
+                                                <small class="text-muted text-uppercase"><?php echo $role; ?></small>
                                             </span>
 
                                         </div>

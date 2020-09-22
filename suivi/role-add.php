@@ -1,9 +1,21 @@
-<?php include("session.php"); ?>
+<?php include("session.php"); 
+      include("uuid.php");  
+
+if (isset($_POST['submit'])) {
+    $name=$_POST['name'];
+    $date = date('Y-m-d');
+    $uuid = gen_uuid();
+    // SQL query to fetch information of registerd users and finds user match.
+    $query = "INSERT INTO usertype(id, name, created_on, deleted) VALUES ('$uuid','$name', '$date', 'no')";
+    if($conn->query($query)){
+        header("Location: role-add.php?success");
+    }else {
+        header("Location: role-add.php?error");
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-
-
-<!-- Mirrored from educate.frontted.com/index.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 16 Sep 2020 02:18:07 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -107,7 +119,7 @@
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Dashboard</h1>
+                        <h1 class="mb-0">Add new role</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -116,63 +128,35 @@
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="activity_all">
                             <!-- FIRST TAB CONTENT -->
-                            <div class="row card-group-row">
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted mb-2 d-flex">Current Month
-                                                    <span class="badge badge-warning ml-2">391</span></div>
-                                                <span class="h4 m-0">&dollar;24,000 <small class="text-muted"> /
-                                                        &dollar;50,000</small> </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">monetization_on</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%;"
-                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted d-flex mb-2">Current Year
-                                                    <span class="badge badge-primary ml-2">2019</span></div>
-                                                <span class="h4 m-0">&dollar;48,229 </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">gps_fixed</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%;"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted mb-2">Top Grossing</div>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="h4 m-0">&dollar;13,531 </div>
-                                                    <div class="progress ml-1" style="width:100%;height: 3px;">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                            <div class="card card-form">
+                            <div class="row no-gutters">
+                                <div class="col-lg-6 card-form__body card-body">
+                                <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input id="name" name="name" type="text" class="form-control" placeholder="Name">
                                                 </div>
                                             </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">contacts</i>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
+                        </div>
 
                             <!-- END FIRST TAB CONTENT -->
                         </div>

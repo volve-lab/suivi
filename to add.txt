@@ -1,0 +1,153 @@
+
+*admin  ->register student
+	->enable/disable account
+	->maintain academic information
+	->update information
+============================================================================
+usecase
+=======
+======
+
+class perfomance
+===============
+users
+------
+teacher:
+-record student marks
+
+dean of study:
+-view student class report 
+-confirm final results
+
+student:
+-view student class report  
+
+parent:
+-view student class report 
+-receive student class report message notification
+
+Discipline
+==========
+matron/patron:
+-view student discipline status/profile 
+-deduct descipline marks
+-permite hourly exit permission
+-request for a student temporary suspension
+-request for a student days exit permission
+
+discipline master:
+-view student discipline status/profile 
+-deduct descipline marks
+-permite hourly exit permission
+-confirm temporary suspension
+-confirm a student days exit permission
+
+parent:
+-view student discipline status/profile 
+-request for a student days exit permission
+-approve for a student days exit permission
+
+student:
+-view student discipline status/profile 
+	
+classes
+=============
+============
+
+*users
+-id uuid
+-username string
+-password string
+-user-type_id uuid
+-user-id uuid
+-created-on date
+-deleted boolean
+
+*staff
+-id uuid
+-firstname string
+-lastname string
+-phone string
+-staff id string
+-staff-role uuid
+-created-on date
+-deleted boolean
+
+*students
+-id uuid
+-firstname string
+-lastname string
+-student id string
+-parent-id uuid
+-level-id uuid
+-created-on date
+-deleted boolean
+
+*parents
+-id uuid
+-firstname string
+-lastname string
+-phone
+-email
+-created-on date
+-deleted boolean
+
+*marks:
+-id uuid
+-course-id uuid
+-student-id uuid
+-points string
+-created-on date
+-deleted boolean
+
+
+*discipline marks
+-id uuid
+-student-id uuid
+-created-on date
+-deleted boolean
+
+*notification
+-id uuid
+-message string
+-created-on date
+-deleted boolean
+
+*usertype
+-id uuid
+-name string
+-created-on date
+-deleted boolean
+
+*staff-role
+-id uuid
+-name string
+-created-on date
+-deleted boolean
+
+*courses
+-id uuid
+-name string
+-course-id string
+-level-id uuid
+-created-on date
+-deleted boolean
+
+*level
+-id uuid
+-name string
+-created-on date
+-deleted boolean
+
+*permission
+-id uuid
+-name string
+-description string
+-from date time
+-to date time
+-created-on date
+-deleted boolean
+===============================================================================
+
+
+		  0787479455

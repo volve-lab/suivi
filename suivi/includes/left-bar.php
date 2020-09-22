@@ -40,15 +40,15 @@
                 <div class="sidebar-block p-0">
                     <ul class="sidebar-menu mt-0">
                         <li class="sidebar-menu-item">
-                            <a class="sidebar-menu-button" href="student-dashboard.html">
+                            <a class="sidebar-menu-button" href="dashboard.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
                                 <span class="sidebar-menu-text">Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a class="sidebar-menu-button" href="student-courses.html">
+                            <a class="sidebar-menu-button" href="role-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue_play_next</i>
-                                <span class="sidebar-menu-text">Courses</span>
+                                <span class="sidebar-menu-text">Roles</span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item">

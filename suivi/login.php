@@ -2,10 +2,14 @@
 session_start();
 // Establishing Connection with Server by passing server_name, user name, password and database as a parameter
 include("lib/config/config.php");
-$query = "SELECT * FROM staff WHERE role = 'Administrator'";
+include("uuid.php");
+$id = gen_uuid();
+$date = date('Y-m-d');
+$query = "SELECT * FROM users WHERE user_type_id = 'Administrator'";
 $query = $conn->query($query);
 if($query->num_rows == 0) {
-    $query = "INSERT INTO staff (title, name, phone, email, role, status, deleted) VALUES('Mr', 'Administrator', '0788888888', 'administrator@gmail.com', 'Administrator', 'Active', '');";
+    // pass=admin@123
+    $query = "INSERT INTO users (id, username, password, user_id, user_type_id, status, created_on, deleted) VALUES('$id', 'admin', 'e6e061838856bf47e1de730719fb2609', '', 'Administrator', 'Active', '$date', '');";
     $query = $conn->query($query);
 }
 
@@ -18,7 +22,7 @@ if(isset($_SESSION['logged_user_info']))
 
 if (isset($_POST['submit'])) {
 // Define $username and $password
-$username=$_POST['email'];
+$username=$_POST['username'];
 // $uname=$_POST['username'];
 $password=$_POST['password'];
 // To protect MySQL injection for Security purpose
@@ -26,17 +30,17 @@ $username = stripslashes($username);
 $password = md5(stripslashes($password));
 // SQL query to fetch information of registerd users and finds user match.
 
-$query = "SELECT * FROM users WHERE password = '$password' AND email = '$username' LIMIT 1";
+$query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
 $query = $conn->query($query);
 $rows = $query->num_rows;
 $arr = $query->fetch_array();
-$user_email = $arr['email'];
+$user_email = $arr['username'];
 $user_id = $arr['id'];
 $user_status = $arr['status'];
 
 if ($rows == 1)
 {
-   if ($user_status != "Inactive")
+   if ($user_status != "Inactive") 
    {
       $_SESSION['logged_user_info'] = $user_id; // Initializing Session
       $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
@@ -47,54 +51,55 @@ if ($rows == 1)
     $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
    }
 }
-else
-{
+// else
+// {
  
-    $querySelect = "SELECT id, role FROM staff WHERE email = '$username'";
-    $querySelect = $conn->query($querySelect);
-    $rowSelect = $querySelect->fetch_assoc();
-    $rowsNum = $querySelect->num_rows;
-    $user_id2 = $rowSelect['id'];
-    $user_role2 = $rowSelect['role'];
-    $user_name2 = $rowSelect['username'];
+//     $querySelect = "SELECT id, role FROM staff WHERE email = '$username'";
+//     $querySelect = $conn->query($querySelect);
+//     $rowSelect = $querySelect->fetch_assoc();
+//     $rowsNum = $querySelect->num_rows;
+//     $user_id2 = $rowSelect['id'];
+//     $user_role2 = $rowSelect['role'];
+//     $user_name2 = $rowSelect['username'];
     
-    if($rowsNum == 1)       
-    {      
-        $queryUser = "INSERT INTO users(user_id , email, username, password, role, status, deleted) VALUES ('$user_id2','$username', '$user_name2', '$password', '$user_role2', 'Active', '')";
-        $queryUser = $conn->query($queryUser);
-        header("Location: login.php?_rdr");
+//     if($rowsNum == 1)       
+//     {      
+//         $queryUser = "INSERT INTO users(user_id , email, username, password, role, status, deleted) VALUES ('$user_id2','$username', '$user_name2', '$password', '$user_role2', 'Active', '')";
+//         $queryUser = $conn->query($queryUser);
+//         header("Location: login.php?_rdr");
 
-        $query = "SELECT * FROM users WHERE password = '$password' AND email = '$username' LIMIT 1";
-        $query = $conn->query($query);
-        $rows = $query->num_rows;
-        $arr = $query->fetch_array();
-        $user_email = $arr['email'];
-        $user_id = $arr['id'];
-        $user_status = $arr['status'];
+//         $query = "SELECT * FROM users WHERE password = '$password' AND email = '$username' LIMIT 1";
+//         $query = $conn->query($query);
+//         $rows = $query->num_rows;
+//         $arr = $query->fetch_array();
+//         $user_email = $arr['email'];
+//         $user_id = $arr['id'];
+//         $user_status = $arr['status'];
 
-        if ($rows == 1)
-        {
-            if ($user_status != "Inactive")
-            {
-                $_SESSION['logged_user_info'] = $user_id; // Initializing Session
-                $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
-                header("Location: redirect.php?_rdr"); // Redirecting To Other Page
-            }
-            else
-            {
-                $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
-            }
-        }
-        else
-        {
-            $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
-        }  
-    }
-    else
-    {
-        $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> not Found</div>';
-    }  
-   }
+//         if ($rows == 1)
+//         {
+//             if ($user_status != "Inactive")
+//             {
+//                 $_SESSION['logged_user_info'] = $user_id; // Initializing Session
+//                 $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
+//                 header("Location: redirect.php?_rdr"); // Redirecting To Other Page
+//             }
+//             else
+//             {
+//                 $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
+//             }
+//         }
+//         else
+//         {
+//             $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
+//         }  
+//     }
+//     else
+//     {
+//         $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> not Found</div>';
+//     }  
+//    }
+
 }
 ?>
 
@@ -218,11 +223,11 @@ else
                     it exists on our system.</div>
             </div>
 
-            <form action="https://educate.frontted.com/index.html" novalidate>
+            <form method="POST" novalidate>
                 <div class="form-group">
-                    <label class="text-label" for="email_2">Email Address:</label>
+                    <label class="text-label" for="email_2">username:</label>
                     <div class="input-group input-group-merge">
-                        <input id="email_2" type="email" required="" class="form-control form-control-prepended"
+                        <input id="email_2" name="username" type="text" required="" class="form-control form-control-prepended"
                             placeholder="john@doe.com">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -234,7 +239,7 @@ else
                 <div class="form-group">
                     <label class="text-label" for="password_2">Password:</label>
                     <div class="input-group input-group-merge">
-                        <input id="password_2" type="password" required="" class="form-control form-control-prepended"
+                        <input id="password_2" name="password" type="password" required="" class="form-control form-control-prepended"
                             placeholder="Enter your password">
                         <div class="input-group-prepend">
                             <div class="input-group-text">
@@ -244,7 +249,7 @@ else
                     </div>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-block btn-primary" type="submit">Login</button>
+                    <button class="btn btn-block btn-primary" name="submit" type="submit">Login</button>
                 </div>
                 <div class="form-group text-center">
                     <a href="#">Forgot password?</a> <br>

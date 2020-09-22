@@ -17,9 +17,8 @@ else
 		$arr = $query->fetch_array();
 		$user_id = $arr['id'];
 		$names = $arr['username'];
-		$role = $arr['role'];
+		$role = $arr['user_type_id'];
 		// $phone = $arr['phone'];
-		$email = $arr['email'];
 	}
 	else
 	{
