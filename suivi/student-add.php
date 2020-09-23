@@ -1,4 +1,31 @@
 <?php include("session.php"); 
+      include("uuid.php");  
+
+if (isset($_POST['submit'])) {
+
+    $firstname=$_POST['firstname'];
+    $lastname=$_POST['lastname'];
+    $gender=$_POST['gender'];
+    $parent=$_POST['parent'];
+    $level=$_POST['level'];
+    $username=$_POST['username'];
+    $userType=$_POST['userType'];
+    $date = date('Y-m-d');
+    $uuid = gen_uuid();
+    // SQL query to fetch information of registerd users and finds user match.
+    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+    if($conn->query($query)){
+                                                                                                            -id uuid
+                                                                                                            -username string
+                                                                                                            -password string
+                                                                                                            -user-type_id uuid
+                                                                                                            -user-id uuid
+        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuid', '$username', '', '$userTypeId', '$userId', 'Active', '$date', 'no')";
+        header("Location: student-add.php?success");
+    }else {
+        header("Location: student-add.php?error");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -30,10 +57,6 @@
     <!-- ion Range Slider -->
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.rtl.css" rel="stylesheet">
-
-    <!-- datatable -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -109,10 +132,7 @@
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Role list</h1></div>
-                            <div class="col col-md-6"><a href="role-add.php" class="btn btn-primary float-right">add role</a></div>
-                        </div>
+                        <h1 class="mb-0">Add new student</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -121,33 +141,84 @@
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="activity_all">
                             <!-- FIRST TAB CONTENT -->
-                            
-                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>Name</th>
-                                                <th>Created on</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                            $no;
-											$query = "SELECT * FROM usertype WHERE deleted != 'yes'";
-											$query = $conn->query($query);
-											$rows = $query->num_rows;
-												while($row = $query->fetch_assoc()){
-                                                    $no++;
-										?>
-                                            <tr>
-                                                <td><?php echo $no; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
-                                                <td><?php echo $row['created_on']; ?></td>
-                                            </tr>
-                                            <?php } ?>
+                            <div class="card card-form">
+                            <div class="row no-gutters">
+                                <div class="col-lg-12 card-form__body card-body">
+                                <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Firstname</label>
+                                                    <input name="firstname" type="text" class="form-control" placeholder="First name">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Lastname</label>
+                                                    <input name="lastname" type="text" class="form-control" placeholder="Last name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Gender</label>
+                                                    <select name="gender" class="form-control">
+                                                        <option selected disabled>Choose...</option>
+                                                        <option value="Female">Female</option>
+                                                        <option value="Male">Male</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Level</label>
+                                                    <select name="gender" class="form-control">
+                                                        <option selected disabled>Choose...</option>
+                                                        <option value="level-1">Level 1</option>
+                                                        <option value="level-2">Level 2</option>
+                                                        <option value="level-3">Level 3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
 
-                                        </tbody>
-                                    </table>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Username</label>
+                                                    <input name="username" type="text" class="form-control" placeholder="Username">
+                                                </div>
+                                            </div>
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >User type</label>
+                                                    <select name="gender" class="form-control">
+                                                        <option selected disabled>Choose...</option>
+                                                        <option value="level-1">Level 1</option>
+                                                        <option value="level-2">Level 2</option>
+                                                        <option value="level-3">Level 3</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                             <!-- END FIRST TAB CONTENT -->
                         </div>
@@ -185,10 +256,7 @@
     </div>
     <!-- // END drawer-layout -->
 
-    <script>
-        $(document).ready(function() {
-        $('#example').DataTable();} );
-    </script>
+
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
 
@@ -242,10 +310,6 @@
     <!-- Chart Samples -->
     <script src="assets/js/page.analytics.js"></script>
 
-    <!-- datatable -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
 </body>
 

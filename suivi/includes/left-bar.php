@@ -52,9 +52,15 @@
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
-                            <a class="sidebar-menu-button" href="student-course-purchase.html">
-                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">shopping_cart</i>
-                                <span class="sidebar-menu-text">Purchase Course</span>
+                            <a class="sidebar-menu-button" href="user-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Users</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="student-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Students</span>
                             </a>
                         </li>
 

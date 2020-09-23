@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Students</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -110,8 +110,8 @@
                 <div class="page__heading">
                     <div class="container-fluid page__container">
                         <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Role list</h1></div>
-                            <div class="col col-md-6"><a href="role-add.php" class="btn btn-primary float-right">add role</a></div>
+                            <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
+                            <div class="col col-md-6"><a href="student-add.php" class="btn btn-primary float-right">add student</a></div>
                         </div>
                     </div>
                 </div>
@@ -126,14 +126,18 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Name</th>
+                                                <th>firstname</th>
+                                                <th>lastname</th>
+                                                <th>gender</th>
+                                                <th>parent-id</th>
+                                                <th>level-id</th>
                                                 <th>Created on</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
                                             $no;
-											$query = "SELECT * FROM usertype WHERE deleted != 'yes'";
+											$query = "SELECT * FROM student WHERE deleted != 'yes'";
 											$query = $conn->query($query);
 											$rows = $query->num_rows;
 												while($row = $query->fetch_assoc()){
@@ -141,8 +145,13 @@
 										?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['firstname']; ?></td>
+                                                <td><?php echo $row['lastname']; ?></td>
+                                                <td><?php echo $row['gender']; ?></td>
+                                                <td><?php echo $row['parent_id']; ?></td>
+                                                <td><?php echo $row['level_id']; ?></td>
                                                 <td><?php echo $row['created_on']; ?></td>
+                                                <td><Button class="btn btn-info">Edit</Button></td>
                                             </tr>
                                             <?php } ?>
 

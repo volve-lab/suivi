@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Users</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -110,8 +110,8 @@
                 <div class="page__heading">
                     <div class="container-fluid page__container">
                         <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Role list</h1></div>
-                            <div class="col col-md-6"><a href="role-add.php" class="btn btn-primary float-right">add role</a></div>
+                            <div class="col col-md-6"><h1 class="mb-0">Users list</h1></div>
+                            <!-- <div class="col col-md-6"><a href="#" class="btn btn-primary float-right">add user</a></div> -->
                         </div>
                     </div>
                 </div>
@@ -126,14 +126,17 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th>Name</th>
+                                                <th>Username</th>
+                                                <th>User type</th>
+                                                <th>Status</th>
                                                 <th>Created on</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
                                             $no;
-											$query = "SELECT * FROM usertype WHERE deleted != 'yes'";
+											$query = "SELECT * FROM users WHERE deleted != 'yes'";
 											$query = $conn->query($query);
 											$rows = $query->num_rows;
 												while($row = $query->fetch_assoc()){
@@ -141,8 +144,11 @@
 										?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['username']; ?></td>
+                                                <td><?php echo $row['user_type_id']; ?></td>
+                                                <td><?php echo $row['status']; ?></td>
                                                 <td><?php echo $row['created_on']; ?></td>
+                                                <td><Button class="btn btn-secondary">Activate</Button></td>
                                             </tr>
                                             <?php } ?>
 
