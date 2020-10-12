@@ -48,7 +48,19 @@
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="role-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue_play_next</i>
-                                <span class="sidebar-menu-text">Roles</span>
+                                <span class="sidebar-menu-text">User type</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="staff-role-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue_play_next</i>
+                                <span class="sidebar-menu-text">Staff role</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="level-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue_play_next</i>
+                                <span class="sidebar-menu-text">Level</span>
                             </a>
                         </li>
                         <li class="sidebar-menu-item">
@@ -61,6 +73,24 @@
                             <a class="sidebar-menu-button" href="student-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
                                 <span class="sidebar-menu-text">Students</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="parent-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Parents</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="course-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Course</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-menu-item">
+                            <a class="sidebar-menu-button" href="staff-list.php">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Staff</span>
                             </a>
                         </li>
 

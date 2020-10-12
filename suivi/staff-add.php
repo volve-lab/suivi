@@ -6,8 +6,8 @@ if (isset($_POST['submit'])) {
     $firstname=$_POST['firstname'];
     $lastname=$_POST['lastname'];
     $gender=$_POST['gender'];
-    $parent=$_POST['parent_id'];
-    $level=$_POST['level_id'];
+    $phone=$_POST['phone'];
+    $roleId=$_POST['roleId'];
     $username=$_POST['username'];
     $userType=$_POST['userType'];
     $date = date('Y-m-d');
@@ -18,14 +18,14 @@ if (isset($_POST['submit'])) {
     $row = $query->fetch_assoc();
     $userTypeId = $row['id'];
     // SQL query to fetch information of registerd users and finds user match.
-    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+    $query = "INSERT INTO staff(id, firstname, lastname, gender, phone, staff_role_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$phone', '$roleId', '$date', 'no')";
     if($conn->query($query)){
         $uuidId = gen_uuid();
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
         $query = $conn->query($query);
-        header("Location: student-add.php?success");
+        header("Location: staff-add.php?success");
     }else {
-        header("Location: student-add.php?error");
+        header("Location: staff-add.php?error");
     }
 }
 ?>
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Staff</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Add new student</h1>
+                        <h1 class="mb-0">Add new staff</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -180,18 +180,8 @@ if (isset($_POST['submit'])) {
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Level</label>
-                                                    <select name="level_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM level WHERE deleted != 'yes'";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
+                                                    <label >Phone number</label>
+                                                    <input name="phone" type="text" class="form-control" placeholder="Phone number">
                                                 </div>
                                             </div>
                                         </div> 
@@ -199,16 +189,16 @@ if (isset($_POST['submit'])) {
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Parent</label>
-                                                    <select name="parent_id" class="form-control">
+                                                    <label >Staff role</label>
+                                                    <select name="roleId" class="form-control">
                                                         <option selected disabled>Choose...</option>
                                                         <?php
                                                         $no;
-                                                        $query = "SELECT * FROM parent WHERE deleted != 'yes' ORDER BY firstname asc";
+                                                        $query = "SELECT * FROM staffrole WHERE deleted != 'yes'";
                                                         $query = $conn->query($query);
                                                             while($row = $query->fetch_assoc()){
                                                     ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['firstname'] .' '. $row['lastname'] ?></option>
+                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
                                                     <?php } ?>
                                                     </select>
                                                 </div>

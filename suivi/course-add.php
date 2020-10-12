@@ -2,30 +2,16 @@
       include("uuid.php");  
 
 if (isset($_POST['submit'])) {
-
-    $firstname=$_POST['firstname'];
-    $lastname=$_POST['lastname'];
-    $gender=$_POST['gender'];
-    $parent=$_POST['parent_id'];
-    $level=$_POST['level_id'];
-    $username=$_POST['username'];
-    $userType=$_POST['userType'];
+    $name=$_POST['name'];
+    $code=$_POST['courseId'];
     $date = date('Y-m-d');
     $uuid = gen_uuid();
-
-    $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
-    $query = $conn->query($query);
-    $row = $query->fetch_assoc();
-    $userTypeId = $row['id'];
     // SQL query to fetch information of registerd users and finds user match.
-    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+    $query = "INSERT INTO course(id, name, courseId, created_on, deleted) VALUES ('$uuid','$name', '$code', '$date', 'no')";
     if($conn->query($query)){
-        $uuidId = gen_uuid();
-        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
-        $query = $conn->query($query);
-        header("Location: student-add.php?success");
+        header("Location: course-add.php?success");
     }else {
-        header("Location: student-add.php?error");
+        header("Location: course-add.php?error");
     }
 }
 ?>
@@ -134,7 +120,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Add new student</h1>
+                        <h1 class="mb-0">Add new role</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -145,9 +131,9 @@ if (isset($_POST['submit'])) {
                             <!-- FIRST TAB CONTENT -->
                             <div class="card card-form">
                             <div class="row no-gutters">
-                                <div class="col-lg-12 card-form__body card-body">
+                                <div class="col-lg-6 card-form__body card-body">
                                 <?php if(isset($_GET['success'])){ ?>
-                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Add</div>
                               <?php } ?>
                               <?php if(isset($_GET['error'])){ ?>
                               <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
@@ -156,72 +142,21 @@ if (isset($_POST['submit'])) {
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Firstname</label>
-                                                    <input name="firstname" type="text" class="form-control" placeholder="First name">
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label >Lastname</label>
-                                                    <input name="lastname" type="text" class="form-control" placeholder="Last name">
+                                                    <label for="name">Name</label>
+                                                    <input id="name" name="name" type="text" class="form-control" placeholder="Name">
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Gender</label>
-                                                    <select name="gender" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="Male">Male</option>
-                                                    </select>
+                                                    <label for="courseId">Code</label>
+                                                    <input id="courseId" name="courseId" type="text" class="form-control" placeholder="Code">
                                                 </div>
                                             </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label >Level</label>
-                                                    <select name="level_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM level WHERE deleted != 'yes'";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div> 
-
+                                        </div>
                                         <div class="row">
                                             <div class="col">
-                                                <div class="form-group">
-                                                    <label >Parent</label>
-                                                    <select name="parent_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM parent WHERE deleted != 'yes' ORDER BY firstname asc";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['firstname'] .' '. $row['lastname'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label >Username</label>
-                                                    <input name="username" type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                            </div>
-                                        </div>   
-                                        <div class="row">
-                                            <div class="col col-md-6">
                                                 <div class="form-group">
                                                     <button type="submit" name="submit" class="btn btn-primary">submit</button>
                                                 </div>

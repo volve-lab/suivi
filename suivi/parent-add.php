@@ -6,19 +6,19 @@ if (isset($_POST['submit'])) {
     $firstname=$_POST['firstname'];
     $lastname=$_POST['lastname'];
     $gender=$_POST['gender'];
-    $parent=$_POST['parent_id'];
-    $level=$_POST['level_id'];
+    $phone=$_POST['phone'];
+    $email=$_POST['email'];
     $username=$_POST['username'];
     $userType=$_POST['userType'];
     $date = date('Y-m-d');
     $uuid = gen_uuid();
 
-    $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
+    $query = "SELECT * FROM usertype WHERE name='parent' AND deleted != 'yes'";
     $query = $conn->query($query);
     $row = $query->fetch_assoc();
     $userTypeId = $row['id'];
     // SQL query to fetch information of registerd users and finds user match.
-    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+    $query = "INSERT INTO parent(id, firstname, lastname, gender, phone, email, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$phone', '$email', '$date', 'no')";
     if($conn->query($query)){
         $uuidId = gen_uuid();
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Parent</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Add new student</h1>
+                        <h1 class="mb-0">Add new parent</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
                             <div class="row no-gutters">
                                 <div class="col-lg-12 card-form__body card-body">
                                 <?php if(isset($_GET['success'])){ ?>
-                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered</div>
                               <?php } ?>
                               <?php if(isset($_GET['error'])){ ?>
                               <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
@@ -179,38 +179,20 @@ if (isset($_POST['submit'])) {
                                                 </div>
                                             </div>
                                             <div class="col">
+                                            <div class="col">
                                                 <div class="form-group">
-                                                    <label >Level</label>
-                                                    <select name="level_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM level WHERE deleted != 'yes'";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
+                                                    <label >Phone</label>
+                                                    <input name="phone" type="text" class="form-control" placeholder="Phone number">
                                                 </div>
+                                            </div>
                                             </div>
                                         </div> 
 
                                         <div class="row">
-                                            <div class="col">
+                                        <div class="col">
                                                 <div class="form-group">
-                                                    <label >Parent</label>
-                                                    <select name="parent_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM parent WHERE deleted != 'yes' ORDER BY firstname asc";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['firstname'] .' '. $row['lastname'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
+                                                    <label >Email</label>
+                                                    <input name="email" type="email" class="form-control" placeholder="Email">
                                                 </div>
                                             </div>
                                             <div class="col">
@@ -219,6 +201,7 @@ if (isset($_POST['submit'])) {
                                                     <input name="username" type="text" class="form-control" placeholder="Username">
                                                 </div>
                                             </div>
+                                            
                                         </div>   
                                         <div class="row">
                                             <div class="col col-md-6">

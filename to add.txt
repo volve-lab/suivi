@@ -20,7 +20,7 @@ dean of study:
 -confirm final results
 
 student:
--view student class report  
+-view student class report
 
 parent:
 -view student class report 
@@ -141,10 +141,10 @@ classes
 
 *permission
 -id uuid
--name string
+-student-id string
 -description string
--from date time
--to date time
+-start date time
+-end date time
 -created-on date
 -deleted boolean
 ===============================================================================

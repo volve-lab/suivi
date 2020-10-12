@@ -138,19 +138,22 @@
                                             $no;
 											$query = "SELECT * FROM users WHERE deleted != 'yes'";
 											$query = $conn->query($query);
-											$rows = $query->num_rows;
 												while($row = $query->fetch_assoc()){
                                                     $no++;
+                                                    $userTypeId = $row['user_type_id'];
+                                                    $queryUser = "SELECT * FROM usertype WHERE id='$userTypeId' AND deleted != 'yes'";
+                                                    $queryUser = $conn->query($queryUser);
+                                                        while($rowUser = $queryUser->fetch_assoc()){
 										?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $row['username']; ?></td>
-                                                <td><?php echo $row['user_type_id']; ?></td>
+                                                <td><?php echo $rowUser['name']; ?></td>
                                                 <td><?php echo $row['status']; ?></td>
                                                 <td><?php echo $row['created_on']; ?></td>
                                                 <td><Button class="btn btn-secondary">Activate</Button></td>
                                             </tr>
-                                            <?php } ?>
+                                            <?php }} ?>
 
                                         </tbody>
                                     </table>

@@ -1,33 +1,40 @@
 <?php include("session.php"); 
-      include("uuid.php");  
 
-if (isset($_POST['submit'])) {
+// -id uuid
+// -student-id string
+// -description string
+// -start date time
+// -end date time
+// -created-on date
+// -deleted boolean 
 
-    $firstname=$_POST['firstname'];
-    $lastname=$_POST['lastname'];
-    $gender=$_POST['gender'];
-    $parent=$_POST['parent_id'];
-    $level=$_POST['level_id'];
-    $username=$_POST['username'];
-    $userType=$_POST['userType'];
+include("uuid.php"); 
+
+$studentId = $_GET['student-id'];
+
+if (isset($_POST['permission'])) {
+
+    $description=$_POST['description'];
+    $startDate = $_POST['startDate'];
+    $endDate = $_POST['endDate'];
+    $startTime = $_POST['startTime'];
+    $endTime = $_POST['endTime'];
     $date = date('Y-m-d');
     $uuid = gen_uuid();
-
-    $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
-    $query = $conn->query($query);
-    $row = $query->fetch_assoc();
-    $userTypeId = $row['id'];
-    // SQL query to fetch information of registerd users and finds user match.
-    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+ 
+    $query = "INSERT INTO permission(id, student_id, description, start_date, end_date, start_time, end_time, created_on, deleted) VALUES ('$uuid', '$studentId', '$description', '$startDate', '$endDate', '$startTime', '$endTime', '$date', 'no')";
     if($conn->query($query)){
         $uuidId = gen_uuid();
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
         $query = $conn->query($query);
-        header("Location: student-add.php?success");
+        header("Location: student-all-actions.php?success");
     }else {
-        header("Location: student-add.php?error");
+        header("Location: student-all-actions?error");
     }
 }
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -36,7 +43,7 @@ if (isset($_POST['submit'])) {
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Dashboard</title>
+    <title>Student</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -59,6 +66,10 @@ if (isset($_POST['submit'])) {
     <!-- ion Range Slider -->
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.rtl.css" rel="stylesheet">
+
+    <!-- datatable -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -134,112 +145,94 @@ if (isset($_POST['submit'])) {
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <h1 class="mb-0">Add new student</h1>
+                        <div class="row">
+                            <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
+                            <div class="col col-md-6">
+                                <a href="student-list.php" class="text-dark-gray ml-2 float-right">
+                                    <i class="material-icons">reply</i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
-                </div>
+                        <div class="container-fluid nav nav-tabs" role="tablist">
+                            <a href="#permission" class="active" data-toggle="tab" role="tab" aria-controls="activity_all" aria-selected="true">Permission</a>
+                            <a href="#course-marks" data-toggle="tab" role="tab" aria-selected="false">Course Marks</a>
+                            <a href="#discipline-marks" data-toggle="tab" role="tab" aria-selected="false">Discipline Marks</a>
+                        </div>
+                    </div>
+                <!-- <div class="bg-white border-bottom mb-3">
+                </div> -->
+                
                 <div class="container-fluid page__container">
+                
                     <div class="tab-content">
-                        <div class="tab-pane active show fade" id="activity_all">
+                    
+                        <div class="tab-pane active show fade" id="permission">
                             <!-- FIRST TAB CONTENT -->
-                            <div class="card card-form">
-                            <div class="row no-gutters">
-                                <div class="col-lg-12 card-form__body card-body">
-                                <?php if(isset($_GET['success'])){ ?>
-                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
-                              <?php } ?>
-                              <?php if(isset($_GET['error'])){ ?>
-                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
-                              <?php } ?>
                                     <form action="" method="post">
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Firstname</label>
-                                                    <input name="firstname" type="text" class="form-control" placeholder="First name">
+                                                    <label >Description</label>
+                                                    <textarea name="description" type="text" class="form-control" rows="4" cols="50" placeholder="Description"> </textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label >Start date</label>
+                                                    <input name="startDate" type="date" class="form-control" >
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Lastname</label>
-                                                    <input name="lastname" type="text" class="form-control" placeholder="Last name">
+                                                    <label >End date</label>
+                                                    <input name="endDate" type="date" class="form-control" >
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Gender</label>
-                                                    <select name="gender" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="Male">Male</option>
-                                                    </select>
+                                                    <label >Start time</label>
+                                                    <input name="startTime" type="time" class="form-control" >
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Level</label>
-                                                    <select name="level_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM level WHERE deleted != 'yes'";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
+                                                    <label >End time</label>
+                                                    <input name="endTime" type="time" class="form-control" >
                                                 </div>
                                             </div>
-                                        </div> 
-
-                                        <div class="row">
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label >Parent</label>
-                                                    <select name="parent_id" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <?php
-                                                        $no;
-                                                        $query = "SELECT * FROM parent WHERE deleted != 'yes' ORDER BY firstname asc";
-                                                        $query = $conn->query($query);
-                                                            while($row = $query->fetch_assoc()){
-                                                    ?>
-                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['firstname'] .' '. $row['lastname'] ?></option>
-                                                    <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                <div class="form-group">
-                                                    <label >Username</label>
-                                                    <input name="username" type="text" class="form-control" placeholder="Username">
-                                                </div>
-                                            </div>
-                                        </div>   
+                                        </div>
                                         <div class="row">
                                             <div class="col col-md-6">
                                                 <div class="form-group">
-                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                    <button type="submit" name="permission" class="btn btn-primary">submit</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </form>
-                                </div>
-                            </div>
-                        </div>
 
                             <!-- END FIRST TAB CONTENT -->
                         </div>
-                        <div class="tab-pane fade" id="activity_purchases">
+                        <div class="tab-pane fade" id="course-marks">
                             <!-- SECOND TAB CONTENT -->
 
 
 
                             <!-- END SECOND TAB -->
+                        </div>
+                        <div class="tab-pane fade" id="discipline-marks">
+                            <!-- THIRD TAB CONTENT -->
+
+
+
+                            <!-- END THIRD TAB -->
                         </div>
                         <div class="tab-pane fade" id="activity_emails">
                             Ducimus aperiam aut corporis, facere nobis id quos dignissimos, ut corrupti asperiores
@@ -268,7 +261,10 @@ if (isset($_POST['submit'])) {
     </div>
     <!-- // END drawer-layout -->
 
-
+    <script>
+        $(document).ready(function() {
+        $('#example').DataTable();} );
+    </script>
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
 
@@ -322,6 +318,10 @@ if (isset($_POST['submit'])) {
     <!-- Chart Samples -->
     <script src="assets/js/page.analytics.js"></script>
 
+    <!-- datatable -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
 </body>
 
