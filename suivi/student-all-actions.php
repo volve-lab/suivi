@@ -27,13 +27,30 @@ if (isset($_POST['permission'])) {
         $uuidId = gen_uuid();
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
         $query = $conn->query($query);
-        header("Location: student-all-actions.php?success");
+        header("Location: student-all-actions.php?student-id='$studentId'&success");
     }else {
-        header("Location: student-all-actions?error");
+        header("Location: student-all-actions.php?student-id='$studentId'&error");
     }
 }
 
+if (isset($_POST['submit'])) {
 
+    $comment=$_POST['comment'];
+    $marks = $_POST['marks'];
+    $date = date('Y-m-d');
+    $uuid = gen_uuid();
+ 
+    $query = "INSERT INTO disciplineMarks(id, student_id, marks, comment, created_on, deleted) VALUES ('$uuid', '$studentId', '$marks', '$comment', '$date', 'no')";
+    if($conn->query($query)){
+        header("Location: student-all-actions.php?student-id=$studentId&success");
+    }else {
+        header("Location: student-all-actions.php?student-id=$studentId&error");
+    }
+}
+
+$queryStudent = "SELECT * FROM student WHERE id='$studentId' deleted != 'yes'";
+$queryStudent = $conn->query($queryStudent);
+$rowStudent = $query->fetch_assoc();
 
 ?>
 <!DOCTYPE html>
@@ -158,9 +175,9 @@ if (isset($_POST['permission'])) {
                 <div class="bg-white border-bottom mb-3">
                         <div class="container-fluid nav nav-tabs" role="tablist">
                             <a href="#permission" class="active" data-toggle="tab" role="tab" aria-controls="activity_all" aria-selected="true">Permission</a>
-                            <a href="#course-marks" data-toggle="tab" role="tab" aria-selected="false">Course Marks</a>
                             <a href="#discipline-marks" data-toggle="tab" role="tab" aria-selected="false">Discipline Marks</a>
-                        </div>
+                            <a href="#course-marks" data-toggle="tab" role="tab" aria-selected="false">Course Marks</a>
+                      </div>
                     </div>
                 <!-- <div class="bg-white border-bottom mb-3">
                 </div> -->
@@ -230,8 +247,64 @@ if (isset($_POST['permission'])) {
                         <div class="tab-pane fade" id="discipline-marks">
                             <!-- THIRD TAB CONTENT -->
 
+                            <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
 
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label >Marks</label>
+                                                    <input name="marks" type="text" class="form-control" placeholder="Enter marks to remove">
+                                                </div>
+                                            </div>
 
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label >Comment</label>
+                                                    <textarea name="comment" type="text" class="form-control" rows="4" cols="50" placeholder="Write a comment"> </textarea>
+                                                </div>
+                                            </div>
+                                            <div class="col col-md-12 mt-4">
+                                                <div class="form-group">
+                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </form>
+                                </div>
+                                <div class="col-md-8">
+                                    <table id="example" class="table table-bordered" style="width:100%; background:#FFCD5A">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Marks/50</th>
+                                                <th>Comment</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+											$query = "SELECT * FROM disciplineMarks WHERE deleted != 'yes'";
+											$query = $conn->query($query);
+											$rows = $query->num_rows;
+												while($row = $query->fetch_assoc()){
+										?>
+                                            <tr>
+                                                <td><?php echo $rowStudent['name']; ?></td>
+                                                <td><?php echo $row['marks']; ?></td>
+                                                <td><?php echo $row['comment']; ?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <!-- END THIRD TAB -->
                         </div>
                         <div class="tab-pane fade" id="activity_emails">
