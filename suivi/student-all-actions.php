@@ -187,7 +187,7 @@ $rowStudent = $query->fetch_assoc();
                     <div class="tab-content">
                     
                         <div class="tab-pane active show fade" id="permission">
-                            <!-- FIRST TAB CONTENT -->
+                            <!-- FIRST TAB CONTENT DISPLINE -->
                                     <form action="" method="post">
                                         <div class="row">
                                             <div class="col">
@@ -235,17 +235,87 @@ $rowStudent = $query->fetch_assoc();
                                         </div>
                                     </form>
 
-                            <!-- END FIRST TAB CONTENT -->
+                            <!-- END FIRST TAB CONTENT DISPLINE -->
                         </div>
                         <div class="tab-pane fade" id="course-marks">
-                            <!-- SECOND TAB CONTENT -->
+                            <!-- SECOND TAB CONTENT REPORT -->
 
+                                <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
 
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label >Marks</label>
+                                                    <input name="marks" type="file" class="form-control" placeholder="Enter marks to remove">
+                                                </div>
+                                            </div>
+                                            <div class="col col-md-6 mt-4">
+                                                <div class="form-group">
+                                                    <button type="submit" name="report" class="btn btn-primary">submit</button>
+                                                </div>
+                                            </div>
+                                        </div>   
+                                    </form>
+                                </div>
+                                <div class="col-md-12">
+                                    <table id="example" class="table table-bordered" style="width:100%; background:#FFF">
+                                        <thead>
+                                            <tr>
+                                                <th>Course</th>
+                                                <th>Quiz</th>
+                                                <th>Exam</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+											// $query = "SELECT * FROM disciplineMarks WHERE deleted != 'yes'";
+											// $query = $conn->query($query);
+											// $rows = $query->num_rows;
+											// 	while($row = $query->fetch_assoc()){
+										?>
+                                            <tr>
+                                                <td>Maths</td>
+                                                <td>50</td>
+                                                <td>40</td>
+                                                <td>90</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maths</td>
+                                                <td>50</td>
+                                                <td>40</td>
+                                                <td>90</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Maths</td>
+                                                <td>50</td>
+                                                <td>40</td>
+                                                <td>90</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Total</td>
+                                                <td>50</td>
+                                                <td>40</td>
+                                                <td>90</td>
+                                            </tr>
+                                            <?php //} ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
-                            <!-- END SECOND TAB -->
+                            <!-- END SECOND TAB REPORT -->
                         </div>
                         <div class="tab-pane fade" id="discipline-marks">
-                            <!-- THIRD TAB CONTENT -->
+                            <!-- THIRD TAB CONTENT PERMISSION -->
 
                             <?php if(isset($_GET['success'])){ ?>
                               <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
@@ -305,7 +375,7 @@ $rowStudent = $query->fetch_assoc();
                                     </table>
                                 </div>
                             </div>
-                            <!-- END THIRD TAB -->
+                            <!-- END THIRD TAB PERMISSION-->
                         </div>
                         <div class="tab-pane fade" id="activity_emails">
                             Ducimus aperiam aut corporis, facere nobis id quos dignissimos, ut corrupti asperiores

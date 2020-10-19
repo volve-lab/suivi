@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Oct 12, 2020 at 07:19 AM
+-- Generation Time: Oct 19, 2020 at 06:18 AM
 -- Server version: 5.7.31-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.6
 
@@ -50,10 +50,22 @@ INSERT INTO `course` (`id`, `name`, `courseId`, `created_on`, `deleted`) VALUES
 
 CREATE TABLE `disciplineMarks` (
   `id` varchar(200) NOT NULL,
+  `marks` int(11) NOT NULL,
+  `comment` text NOT NULL,
   `created_on` date DEFAULT NULL,
   `deleted` char(45) DEFAULT NULL,
   `student_id` varchar(200) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `disciplineMarks`
+--
+
+INSERT INTO `disciplineMarks` (`id`, `marks`, `comment`, `created_on`, `deleted`, `student_id`) VALUES
+('15e9b0b9-ce15-4efe-8e35-46d2324cf1b9', 10, ' drink beer', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('2e1615e8-9051-42a3-9fe2-a030916233f0', 5, ' fsd', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('50a7d596-9658-47c2-84d1-e20dea18cfc0', 5, ' Going out without permission', '2020-10-14', 'no', '70eb22a-9d06-408e-9107-cad9f25da765'),
+('bac31fc2-06aa-4ca9-8d48-b26d21e526f0', 4, ' out of class', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765');
 
 -- --------------------------------------------------------
 
@@ -85,11 +97,13 @@ INSERT INTO `level` (`id`, `name`, `created_on`, `deleted`) VALUES
 
 CREATE TABLE `marks` (
   `id` varchar(200) NOT NULL,
-  `course_id` varchar(200) DEFAULT NULL,
-  `points` varchar(45) NOT NULL,
-  `created_on` date DEFAULT NULL,
-  `deleted` char(45) DEFAULT NULL,
-  `student_id` varchar(200) DEFAULT NULL
+  `report_id` varchar(200) NOT NULL,
+  `quiz` int(11) NOT NULL,
+  `exam` int(11) NOT NULL,
+  `total` int(11) NOT NULL,
+  `created_on` date NOT NULL,
+  `updated_on` date NOT NULL,
+  `deleted` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -154,6 +168,20 @@ CREATE TABLE `permission` (
 
 INSERT INTO `permission` (`id`, `description`, `start_date`, `end_date`, `start_time`, `end_time`, `created_on`, `deleted`, `student_id`) VALUES
 ('3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', ' sickness', '2020-10-11', '2020-10-17', '00:00:00', '00:00:00', '2020-10-11', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `report`
+--
+
+CREATE TABLE `report` (
+  `id` varchar(200) NOT NULL,
+  `student_id` varchar(200) NOT NULL,
+  `created_on` date NOT NULL,
+  `updated_on` date NOT NULL,
+  `deleted` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -297,12 +325,6 @@ ALTER TABLE `course`
 -- Indexes for table `disciplineMarks`
 --
 ALTER TABLE `disciplineMarks`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `marks`
---
-ALTER TABLE `marks`
   ADD PRIMARY KEY (`id`);
 
 --
