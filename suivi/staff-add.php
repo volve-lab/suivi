@@ -13,6 +13,7 @@ if (isset($_POST['submit'])) {
     $date = date('Y-m-d');
     $uuid = gen_uuid();
 
+    
     $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
     $query = $conn->query($query);
     $row = $query->fetch_assoc();

@@ -249,12 +249,12 @@ $rowStudent = $query->fetch_assoc();
 
                             <div class="row">
                                 <div class="col-md-12">
-                                    <form action="" method="post">
+                                    <form action="script.php" method="post" enctype="multipart/form-data">
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label >Marks</label>
-                                                    <input name="marks" type="file" class="form-control" placeholder="Enter marks to remove">
+                                                    <input name="excelDoc" type="file" class="form-control" placeholder="Enter marks to remove">
                                                 </div>
                                             </div>
                                             <div class="col col-md-6 mt-4">
