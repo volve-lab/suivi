@@ -135,7 +135,7 @@
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $no;
+                                            $no=0;
 											$query = "SELECT * FROM users WHERE deleted != 'yes'";
 											$query = $conn->query($query);
 											$rows = $query->num_rows;

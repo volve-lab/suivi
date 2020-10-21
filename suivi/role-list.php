@@ -132,7 +132,7 @@
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $no;
+                                            $no=0;
 											$query = "SELECT * FROM usertype WHERE deleted != 'yes'";
 											$query = $conn->query($query);
 											$rows = $query->num_rows;

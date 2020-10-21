@@ -15,12 +15,12 @@ if (isset($_POST['submit'])) {
     // SQL query to fetch information of registerd users and finds user match.
     $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
     if($conn->query($query)){
-                                                                                                            -id uuid
-                                                                                                            -username string
-                                                                                                            -password string
-                                                                                                            -user-type_id uuid
-                                                                                                            -user-id uuid
-        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuid', '$username', '', '$userTypeId', '$userId', 'Active', '$date', 'no')";
+                                                                                                            // -id uuid
+                                                                                                            $uuid_user = gen_uuid();                                                                                               // -username string
+                                                                                                            // -password string
+                                                                                                            // -user-type_id uuid
+                                                                                                            // -user-id uuid
+        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuid_user', '$username', '', '$userTypeId', '$userId', 'Active', '$date', 'no')";
         header("Location: student-add.php?success");
     }else {
         header("Location: student-add.php?error");
