@@ -6,21 +6,32 @@ if (isset($_POST['submit'])) {
     $firstname=$_POST['firstname'];
     $lastname=$_POST['lastname'];
     $gender=$_POST['gender'];
-    $parent=$_POST['parent'];
-    $level=$_POST['level'];
+    $parent=$_POST['parent_id'];
+    $level=$_POST['level_id'];
     $username=$_POST['username'];
     $userType=$_POST['userType'];
     $date = date('Y-m-d');
     $uuid = gen_uuid();
+
+    $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
+    $query = $conn->query($query);
+    $row = $query->fetch_assoc();
+    $userTypeId = $row['id'];
     // SQL query to fetch information of registerd users and finds user match.
-    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
+    $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
     if($conn->query($query)){
+<<<<<<< HEAD
                                                                                                             // -id uuid
                                                                                                             $uuid_user = gen_uuid();                                                                                               // -username string
                                                                                                             // -password string
                                                                                                             // -user-type_id uuid
                                                                                                             // -user-id uuid
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuid_user', '$username', '', '$userTypeId', '$userId', 'Active', '$date', 'no')";
+=======
+        $uuidId = gen_uuid();
+        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
+        $query = $conn->query($query);
+>>>>>>> b398300faba3225dce3d9a54e4625bb828409ac4
         header("Location: student-add.php?success");
     }else {
         header("Location: student-add.php?error");
@@ -179,11 +190,16 @@ if (isset($_POST['submit'])) {
                                             <div class="col">
                                                 <div class="form-group">
                                                     <label >Level</label>
-                                                    <select name="gender" class="form-control">
+                                                    <select name="level_id" class="form-control">
                                                         <option selected disabled>Choose...</option>
-                                                        <option value="level-1">Level 1</option>
-                                                        <option value="level-2">Level 2</option>
-                                                        <option value="level-3">Level 3</option>
+                                                        <?php
+                                                        $no;
+                                                        $query = "SELECT * FROM level WHERE deleted != 'yes'";
+                                                        $query = $conn->query($query);
+                                                            while($row = $query->fetch_assoc()){
+                                                    ?>
+                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+                                                    <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -192,24 +208,29 @@ if (isset($_POST['submit'])) {
                                         <div class="row">
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >Username</label>
-                                                    <input name="username" type="text" class="form-control" placeholder="Username">
+                                                    <label >Parent</label>
+                                                    <select name="parent_id" class="form-control">
+                                                        <option selected disabled>Choose...</option>
+                                                        <?php
+                                                        $no;
+                                                        $query = "SELECT * FROM parent WHERE deleted != 'yes' ORDER BY firstname asc";
+                                                        $query = $conn->query($query);
+                                                            while($row = $query->fetch_assoc()){
+                                                    ?>
+                                                        <option value="<?php echo $row['id'] ?>"><?php echo $row['firstname'] .' '. $row['lastname'] ?></option>
+                                                    <?php } ?>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col">
                                                 <div class="form-group">
-                                                    <label >User type</label>
-                                                    <select name="gender" class="form-control">
-                                                        <option selected disabled>Choose...</option>
-                                                        <option value="level-1">Level 1</option>
-                                                        <option value="level-2">Level 2</option>
-                                                        <option value="level-3">Level 3</option>
-                                                    </select>
+                                                    <label >Username</label>
+                                                    <input name="username" type="text" class="form-control" placeholder="Username">
                                                 </div>
                                             </div>
                                         </div>   
                                         <div class="row">
-                                            <div class="col">
+                                            <div class="col col-md-6">
                                                 <div class="form-group">
                                                     <button type="submit" name="submit" class="btn btn-primary">submit</button>
                                                 </div>

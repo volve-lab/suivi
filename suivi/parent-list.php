@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Students</title>
+    <title>Parents</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -110,8 +110,8 @@
                 <div class="page__heading">
                     <div class="container-fluid page__container">
                         <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
-                            <div class="col col-md-6"><a href="student-add.php" class="btn btn-primary float-right">add student</a></div>
+                            <div class="col col-md-6"><h1 class="mb-0">Parents list</h1></div>
+                            <div class="col col-md-6"><a href="parent-add.php" class="btn btn-primary float-right">add parent</a></div>
                         </div>
                     </div>
                 </div>
@@ -129,40 +129,32 @@
                                                 <th>firstname</th>
                                                 <th>lastname</th>
                                                 <th>gender</th>
-                                                <th>parent-id</th>
-                                                <th>level-id</th>
+                                                <th>Phone</th>
+                                                <th>email</th>
                                                 <th>Created on</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                         <?php
-                                            $no=0;
-											$query = "SELECT * FROM student WHERE deleted != 'yes'";
+                                            $no;
+											$query = "SELECT * FROM parent WHERE deleted != 'yes'";
 											$query = $conn->query($query);
 											$rows = $query->num_rows;
 												while($row = $query->fetch_assoc()){
                                                     $no++;
-                                                    $parentId = $row['parent_id'];
-                                                    $levelId = $row['level_id'];
-                                                    $queryParent = "SELECT * FROM parent WHERE id='$parentId' AND deleted != 'yes'";
-                                                    $queryParent = $conn->query($queryParent);
-                                                        while($rowParent = $queryParent->fetch_assoc()){
-                                                            $queryLevel = "SELECT * FROM level WHERE id='$levelId' AND deleted != 'yes'";
-                                                            $queryLevel = $conn->query($queryLevel);
-                                                                while($rowLevel = $queryLevel->fetch_assoc()){
 										?>
                                             <tr>
                                                 <td><?php echo $no; ?></td>
                                                 <td><?php echo $row['firstname']; ?></td>
                                                 <td><?php echo $row['lastname']; ?></td>
                                                 <td><?php echo $row['gender']; ?></td>
-                                                <td><?php echo $rowParent['firstname']. ' '. $rowParent['lastname']; ?></td>
-                                                <td><?php echo $rowLevel['name']; ?></td>
+                                                <td><?php echo $row['phone']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
                                                 <td><?php echo $row['created_on']; ?></td>
-                                                <td><a class="btn btn-info" href="student-all-actions.php?student-id=<?php echo $row['id']; ?>">Actions</a></td>
+                                                <td><Button class="btn btn-info">Edit</Button></td>
                                             </tr>
-                                            <?php }}} ?>
+                                            <?php } ?>
 
                                         </tbody>
                                     </table>

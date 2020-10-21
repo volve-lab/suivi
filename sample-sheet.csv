@@ -1,0 +1,4 @@
+id,reportId,course,quiz,exam,total,createdOn,updatedOn,deleted
+3b3e2fe1-721c-4e5f-b17f-b03d83d6803b,3b3e2fe1-721c-4e5f-b17f-b03d83d6803b,Math,10,20,30,10/20/2020,10/20/2020,no
+3b3e2fe1-721c-4e5f-b17f-b03d83d6803c,3b3e2fe1-721c-4e5f-b17f-b03d83d6803b,English,10,20,30,10/20/2020,10/20/2020,no
+3b3e2fe1-721c-4e5f-b17f-b03d83d6803d,3b3e2fe1-721c-4e5f-b17f-b03d83d6803b,Total,20,40,60,10/20/2020,10/20/2020,no

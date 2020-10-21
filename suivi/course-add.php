@@ -1,4 +1,19 @@
 <?php include("session.php"); 
+      include("uuid.php");  
+
+if (isset($_POST['submit'])) {
+    $name=$_POST['name'];
+    $code=$_POST['courseId'];
+    $date = date('Y-m-d');
+    $uuid = gen_uuid();
+    // SQL query to fetch information of registerd users and finds user match.
+    $query = "INSERT INTO course(id, name, courseId, created_on, deleted) VALUES ('$uuid','$name', '$code', '$date', 'no')";
+    if($conn->query($query)){
+        header("Location: course-add.php?success");
+    }else {
+        header("Location: course-add.php?error");
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -7,7 +22,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Students</title>
+    <title>Dashboard</title>
 
     <!-- Prevent the demo from appearing in search engines -->
     <meta name="robots" content="noindex">
@@ -30,10 +45,6 @@
     <!-- ion Range Slider -->
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-ion-rangeslider.rtl.css" rel="stylesheet">
-
-    <!-- datatable -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
 
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -109,10 +120,7 @@
 
                 <div class="page__heading">
                     <div class="container-fluid page__container">
-                        <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
-                            <div class="col col-md-6"><a href="student-add.php" class="btn btn-primary float-right">add student</a></div>
-                        </div>
+                        <h1 class="mb-0">Add new role</h1>
                     </div>
                 </div>
                 <div class="bg-white border-bottom mb-3">
@@ -121,51 +129,43 @@
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="activity_all">
                             <!-- FIRST TAB CONTENT -->
-                            
-                            <table id="example" class="table table-striped table-bordered" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>#</th>
-                                                <th>firstname</th>
-                                                <th>lastname</th>
-                                                <th>gender</th>
-                                                <th>parent-id</th>
-                                                <th>level-id</th>
-                                                <th>Created on</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-                                            $no=0;
-											$query = "SELECT * FROM student WHERE deleted != 'yes'";
-											$query = $conn->query($query);
-											$rows = $query->num_rows;
-												while($row = $query->fetch_assoc()){
-                                                    $no++;
-                                                    $parentId = $row['parent_id'];
-                                                    $levelId = $row['level_id'];
-                                                    $queryParent = "SELECT * FROM parent WHERE id='$parentId' AND deleted != 'yes'";
-                                                    $queryParent = $conn->query($queryParent);
-                                                        while($rowParent = $queryParent->fetch_assoc()){
-                                                            $queryLevel = "SELECT * FROM level WHERE id='$levelId' AND deleted != 'yes'";
-                                                            $queryLevel = $conn->query($queryLevel);
-                                                                while($rowLevel = $queryLevel->fetch_assoc()){
-										?>
-                                            <tr>
-                                                <td><?php echo $no; ?></td>
-                                                <td><?php echo $row['firstname']; ?></td>
-                                                <td><?php echo $row['lastname']; ?></td>
-                                                <td><?php echo $row['gender']; ?></td>
-                                                <td><?php echo $rowParent['firstname']. ' '. $rowParent['lastname']; ?></td>
-                                                <td><?php echo $rowLevel['name']; ?></td>
-                                                <td><?php echo $row['created_on']; ?></td>
-                                                <td><a class="btn btn-info" href="student-all-actions.php?student-id=<?php echo $row['id']; ?>">Actions</a></td>
-                                            </tr>
-                                            <?php }}} ?>
-
-                                        </tbody>
-                                    </table>
+                            <div class="card card-form">
+                            <div class="row no-gutters">
+                                <div class="col-lg-6 card-form__body card-body">
+                                <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Add</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="name">Name</label>
+                                                    <input id="name" name="name" type="text" class="form-control" placeholder="Name">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <label for="courseId">Code</label>
+                                                    <input id="courseId" name="courseId" type="text" class="form-control" placeholder="Code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="form-group">
+                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                             <!-- END FIRST TAB CONTENT -->
                         </div>
@@ -203,10 +203,7 @@
     </div>
     <!-- // END drawer-layout -->
 
-    <script>
-        $(document).ready(function() {
-        $('#example').DataTable();} );
-    </script>
+
     <!-- jQuery -->
     <script src="assets/vendor/jquery.min.js"></script>
 
@@ -260,10 +257,6 @@
     <!-- Chart Samples -->
     <script src="assets/js/page.analytics.js"></script>
 
-    <!-- datatable -->
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
 
 </body>
 
