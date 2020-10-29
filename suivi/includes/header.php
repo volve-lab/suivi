@@ -205,7 +205,7 @@
                                             href="edit-account.php">
                                             <span class="material-icons mr-2">account_circle</span> Edit Account
                                         </a>
-                                        <a class="dropdown-item d-flex align-items-center py-2" href="login.php">
+                                        <a class="dropdown-item d-flex align-items-center py-2" href="logout.php">
                                             <span class="material-icons mr-2">exit_to_app</span> Logout
                                         </a>
                                     </div>

@@ -21,85 +21,72 @@ if(isset($_SESSION['logged_user_info']))
 }
 
 if (isset($_POST['submit'])) {
-// Define $username and $password
-$username=$_POST['username'];
-// $uname=$_POST['username'];
-$password=$_POST['password'];
-// To protect MySQL injection for Security purpose
-$username = stripslashes($username);
-$password = md5(stripslashes($password));
-// SQL query to fetch information of registerd users and finds user match.
+    // Define $username and $password
+    $username=$_POST['username'];
+    // $uname=$_POST['username'];
+    $password=$_POST['password'];
+    // To protect MySQL injection for Security purpose
+    $username = stripslashes($username);
+    $password = md5(stripslashes($password));
+    // SQL query to fetch information of registerd users and finds user match.
 
-$query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
-$query = $conn->query($query);
-$rows = $query->num_rows;
-$arr = $query->fetch_array();
-$user_email = $arr['username'];
-$user_id = $arr['id'];
-$user_status = $arr['status'];
+    $query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
+    $query = $conn->query($query);
+    $rows = $query->num_rows;
+    $arr = $query->fetch_array();
+    $user_email = $arr['username'];
+    $user_id = $arr['id'];
+    $user_status = $arr['status'];
 
-if ($rows == 1)
-{
-   if ($user_status != "Inactive") 
-   {
-      $_SESSION['logged_user_info'] = $user_id; // Initializing Session
-      $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
-      header("Location: redirect.php?_rdr"); // Redirecting To Other Page
-   }
-   else
-   {
-    $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
-   }
-}
-// else
-// {
- 
-//     $querySelect = "SELECT id, role FROM staff WHERE email = '$username'";
-//     $querySelect = $conn->query($querySelect);
-//     $rowSelect = $querySelect->fetch_assoc();
-//     $rowsNum = $querySelect->num_rows;
-//     $user_id2 = $rowSelect['id'];
-//     $user_role2 = $rowSelect['role'];
-//     $user_name2 = $rowSelect['username'];
-    
-//     if($rowsNum == 1)       
-//     {      
-//         $queryUser = "INSERT INTO users(user_id , email, username, password, role, status, deleted) VALUES ('$user_id2','$username', '$user_name2', '$password', '$user_role2', 'Active', '')";
-//         $queryUser = $conn->query($queryUser);
-//         header("Location: login.php?_rdr");
+    // echo 'password '. $arr['password'];
 
-//         $query = "SELECT * FROM users WHERE password = '$password' AND email = '$username' LIMIT 1";
-//         $query = $conn->query($query);
-//         $rows = $query->num_rows;
-//         $arr = $query->fetch_array();
-//         $user_email = $arr['email'];
-//         $user_id = $arr['id'];
-//         $user_status = $arr['status'];
+    if ($rows == 1)
+    {
+        if ($user_status != "Inactive") 
+        {
+            $_SESSION['logged_user_info'] = $user_id; // Initializing Session
+            $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
+            header("Location: redirect.php?_rdr"); // Redirecting To Other Page
+        }
+        else
+        {
+            $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
+        }
+    }
 
-//         if ($rows == 1)
-//         {
-//             if ($user_status != "Inactive")
-//             {
-//                 $_SESSION['logged_user_info'] = $user_id; // Initializing Session
-//                 $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
-//                 header("Location: redirect.php?_rdr"); // Redirecting To Other Page
-//             }
-//             else
-//             {
-//                 $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
-//             }
-//         }
-//         else
-//         {
-//             $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
-//         }  
-//     }
-//     else
-//     {
-//         $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> not Found</div>';
-//     }  
-//    }
 
+    // else 
+    // {
+    // if($arr['password'] == ""){
+    //     $querySelect = "UPDATE users SET password = '$password' WHERE username = '$username'";
+    //     if($conn->query($querySelect)){
+    //         $query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
+    //         $query = $conn->query($query);
+    //         $rows = $query->num_rows;
+    //         $arr = $query->fetch_array();
+    //         $user_email = $arr['username'];
+    //         $user_id = $arr['id'];
+    //         $user_status = $arr['status'];
+
+    //         if ($rows == 1)
+    //         {
+    //             if ($user_status != "Inactive") 
+    //             {
+    //                 $_SESSION['logged_user_info'] = $user_id; // Initializing Session
+    //                 $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
+    //                 header("Location: redirect.php?_rdr"); // Redirecting To Other Page
+    //             }
+    //             else
+    //             {
+    //                 $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
+    //             }
+    //         }
+    //             }
+
+    //         } else {
+    //             $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
+    //         }
+    //     }
 }
 ?>
 
@@ -219,8 +206,7 @@ if ($rows == 1)
 
             <div class="alert alert-soft-success d-flex" role="alert">
                 <i class="material-icons mr-3">check_circle</i>
-                <div class="text-body">An email with password reset instructions has been sent to your email address, if
-                    it exists on our system.</div>
+                <div class="text-body">Login whith your cridentials</div>
             </div>
 
             <form method="POST" novalidate>

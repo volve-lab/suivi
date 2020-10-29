@@ -20,18 +20,9 @@ if (isset($_POST['submit'])) {
     // SQL query to fetch information of registerd users and finds user match.
     $query = "INSERT INTO student(id, firstname, lastname, gender, parent_id, level_id, created_on, deleted) VALUES ('$uuid', '$firstname', '$lastname', '$gender', '$parent', '$level', '$date', 'no')";
     if($conn->query($query)){
-<<<<<<< HEAD
-                                                                                                            // -id uuid
-                                                                                                            $uuid_user = gen_uuid();                                                                                               // -username string
-                                                                                                            // -password string
-                                                                                                            // -user-type_id uuid
-                                                                                                            // -user-id uuid
-        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuid_user', '$username', '', '$userTypeId', '$userId', 'Active', '$date', 'no')";
-=======
         $uuidId = gen_uuid();
         $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
         $query = $conn->query($query);
->>>>>>> b398300faba3225dce3d9a54e4625bb828409ac4
         header("Location: student-add.php?success");
     }else {
         header("Location: student-add.php?error");

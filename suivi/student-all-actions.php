@@ -163,7 +163,7 @@ $rowStudent = $query->fetch_assoc();
                 <div class="page__heading">
                     <div class="container-fluid page__container">
                         <div class="row">
-                            <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
+                            <div class="col col-md-6"><h1 class="mb-0">Student status</h1></div>
                             <div class="col col-md-6">
                                 <a href="student-list.php" class="text-dark-gray ml-2 float-right">
                                     <i class="material-icons">reply</i>
@@ -341,17 +341,29 @@ $rowStudent = $query->fetch_assoc();
                                         </thead>
                                         <tbody>
                                         <?php
-											$query = "SELECT * FROM disciplineMarks WHERE deleted != 'yes'";
-											$query = $conn->query($query);
-											$rows = $query->num_rows;
-												while($row = $query->fetch_assoc()){
+											// $query = "SELECT * FROM disciplineMarks WHERE deleted != 'yes'";
+											// $query = $conn->query($query);
+											// $rows = $query->num_rows;
+											// 	while($row = $query->fetch_assoc()){
 										?>
+                                            <!-- <tr>
+                                                <td><?php// echo $rowStudent['name']; ?></td>
+                                                <td><?php// echo $row['marks']; ?></td>
+                                                <td><?php// echo $row['comment']; ?></td>
+                                            </tr> -->
+
                                             <tr>
-                                                <td><?php echo $rowStudent['name']; ?></td>
-                                                <td><?php echo $row['marks']; ?></td>
-                                                <td><?php echo $row['comment']; ?></td>
+                                                <td> out of class</td>
+                                                <td>5</td>
+                                                <td>Found out of the class </td>
                                             </tr>
-                                            <?php } ?>
+                                            <tr>
+                                                <td> out of class</td>
+                                                <td>5</td>
+                                                <td>Found out of the class </td>
+                                            </tr>
+
+                                            <?php //} ?>
                                         </tbody>
                                     </table>
                                 </div>
