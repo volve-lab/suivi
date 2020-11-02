@@ -29,8 +29,8 @@ function send_message($receiver,$message)
     
     $data = http_build_query ($data);
 
-    $username="";
-    $password="";
+    $username="gapfizi";
+    $password="pass123";
     
     //open connection
     $ch = curl_init();

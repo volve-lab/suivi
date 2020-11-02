@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 21, 2020 at 08:40 PM
--- Server version: 10.4.13-MariaDB
--- PHP Version: 7.4.8
+-- Host: localhost:3306
+-- Generation Time: Nov 02, 2020 at 07:22 AM
+-- Server version: 5.7.32-0ubuntu0.18.04.1
+-- PHP Version: 7.2.24-0ubuntu0.18.04.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -178,7 +177,10 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`id`, `description`, `start_date`, `end_date`, `start_time`, `end_time`, `created_on`, `deleted`, `student_id`) VALUES
-('3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', ' sickness', '2020-10-11', '2020-10-17', '00:00:00', '00:00:00', '2020-10-11', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765');
+('382d36e9-346a-4726-b20a-de400d70ad6a', 'permission', '2020-10-19', '2020-10-30', '02:00:00', '04:00:00', '2020-10-30', 'no', ''),
+('38bd97a6-a456-4e95-b1f8-d720fda42b63', '  sickness permission', '2020-10-30', '2020-10-31', '00:00:00', '15:00:00', '2020-10-30', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', ' sickness', '2020-10-11', '2020-10-17', '00:00:00', '00:00:00', '2020-10-11', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('77d89c43-e5c2-48aa-954e-76b4ac428141', ' dgdf', '2020-10-23', '2020-10-31', '00:00:00', '16:00:00', '2020-10-30', 'no', '\'');
 
 -- --------------------------------------------------------
 
@@ -298,11 +300,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `password`, `user_id`, `user_type_id`, `status`, `created_on`, `deleted`) VALUES
 ('75956970-672e-4fd4-ae7a-ff9d576956b9', 'yvan', '', '76487962-b0f2-4102-9de2-9316fbfdec35', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-10-10', 'no'),
 ('9b5fbbc1-b52f-44c5-bccd-c2ca19498abc', '', '', '8fc55f81-749b-4451-b5b2-2477a16c8cd6', '', 'Active', '2020-10-11', 'no'),
-('b00048fd-22a7-4f6c-86f4-27ba0b8afe9f', 'sam', '', 'cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', '115a3f3c-e09c-4f8a-827f-cf909ba73a11', 'Active', '2020-10-10', 'no'),
+('b00048fd-22a7-4f6c-86f4-27ba0b8afe9f', 'sam', 'c585165487bc69e2bbfabc9cee515b8b', 'cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', '115a3f3c-e09c-4f8a-827f-cf909ba73a11', 'Active', '2020-10-10', 'no'),
 ('bee53e8a-f3b2-41db-9cf2-8074dfdd6901', '', '', '3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', '', 'Active', '2020-10-11', 'no'),
-('d0a4dafd-530c-4b8a-b34a-4ae7ce7d38ef', 'admin', 'e6e061838856bf47e1de730719fb2609', '', 'Administrator', 'Active', '2020-10-10', ''),
-('d82d6b4f-898c-463c-a8f9-2f38e3c7a335', 'blaise', '', 'f70eb22a-9d06-408e-9107-cad9f25da765', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-10-10', 'no'),
-('e9b25b2d-a313-453f-8dfb-20c4672b8ebb', 'admin', 'e6e061838856bf47e1de730719fb2609', '', '1a35b440-12f4-43ae-8444-d54793667c2a', 'Active', '2020-09-21', 'no');
+('d0a4dafd-530c-4b8a-b34a-4ae7ce7d38ef', 'admin', '4ec503be252d765ea37621a629afdaa6', '', 'Administrator', 'Active', '2020-10-10', ''),
+('d82d6b4f-898c-463c-a8f9-2f38e3c7a335', 'blaise', '6a3611785d499d8821a0d9b24d464e0f', 'f70eb22a-9d06-408e-9107-cad9f25da765', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-10-10', 'no'),
+('e9b25b2d-a313-453f-8dfb-20c4672b8ebb', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '1a35b440-12f4-43ae-8444-d54793667c2a', 'Active', '2020-09-21', 'no');
 
 -- --------------------------------------------------------
 
@@ -393,7 +395,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `usertype`
   ADD PRIMARY KEY (`id`);
-COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

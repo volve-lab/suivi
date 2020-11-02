@@ -21,12 +21,46 @@ if (isset($_POST['permission'])) {
     $endTime = $_POST['endTime'];
     $date = date('Y-m-d');
     $uuid = gen_uuid();
+    $receiver = '0788211579';
  
     $query = "INSERT INTO permission(id, student_id, description, start_date, end_date, start_time, end_time, created_on, deleted) VALUES ('$uuid', '$studentId', '$description', '$startDate', '$endDate', '$startTime', '$endTime', '$date', 'no')";
     if($conn->query($query)){
-        $uuidId = gen_uuid();
-        $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
-        $query = $conn->query($query);
+        // $uuidId = gen_uuid();
+        // $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
+        // $query = $conn->query($query);
+
+
+        $data = array(      
+            "sender"=>"Suivi",
+            "recipients"=>$receiver,
+            "message"=>$description,        
+        );
+    
+        $url = "https://www.intouchsms.co.rw/api/sendsms/.json";
+        
+        $data = http_build_query ($data);
+    
+        $username="gapfizi";
+        $password="pass123";
+        
+        //open connection
+        $ch = curl_init();
+    
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);  
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+    
+        //execute post
+        $result = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        //close connection
+        curl_close($ch);
+
+        // send_message('0788211579',$description);
         header("Location: student-all-actions.php?student-id='$studentId'&success");
     }else {
         header("Location: student-all-actions.php?student-id='$studentId'&error");
