@@ -111,7 +111,9 @@
                     <div class="container-fluid page__container">
                         <div class="row">
                             <div class="col col-md-6"><h1 class="mb-0">Students list</h1></div>
+                            <?php if($role == 'administrator'){ ?>
                             <div class="col col-md-6"><a href="student-add.php" class="btn btn-primary float-right">add student</a></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

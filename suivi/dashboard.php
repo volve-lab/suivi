@@ -115,73 +115,146 @@
                 <div class="container-fluid page__container">
                     <div class="tab-content">
                         <div class="tab-pane active show fade" id="activity_all">
+
+                        
                             <!-- FIRST TAB CONTENT -->
+                            <?php if($role == 'administrator' || $role == 'staff'){ ?>
                             <div class="row card-group-row">
                                 <div class="col-lg-4 col-md-6 card-group-row__col">
                                     <div class="card card-group-row__card">
                                         <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
                                             <div class="flex">
-                                                <div class="card-header__title text-muted mb-2 d-flex">Current Month
-                                                    <span class="badge badge-warning ml-2">391</span></div>
-                                                <span class="h4 m-0">&dollar;24,000 <small class="text-muted"> /
-                                                        &dollar;50,000</small> </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">monetization_on</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 25%;"
-                                                aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted d-flex mb-2">Current Year
-                                                    <span class="badge badge-primary ml-2">2019</span></div>
-                                                <span class="h4 m-0">&dollar;48,229 </span>
-                                            </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">gps_fixed</i>
-                                            </div>
-                                        </div>
-                                        <div class="progress" style="height: 3px;">
-                                            <div class="progress-bar" role="progressbar" style="width: 50%;"
-                                                aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 card-group-row__col">
-                                    <div class="card card-group-row__card">
-                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
-                                            <div class="flex">
-                                                <div class="card-header__title text-muted mb-2">Top Grossing</div>
-
-                                                <div class="d-flex align-items-center">
-                                                    <div class="h4 m-0">&dollar;13,531 </div>
-                                                    <div class="progress ml-1" style="width:100%;height: 3px;">
-                                                        <div class="progress-bar bg-success" role="progressbar"
-                                                            style="width: 25%;" aria-valuenow="25" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
-                                                    </div>
+                                                <div class="card-header__title text-muted mb-2 d-flex">All staff</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM staff WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
                                                 </div>
+                                                <div><i class="material-icons icon-muted icon-40pt ml-3">people</i></div>
                                             </div>
-                                            <div><i class="material-icons icon-muted icon-40pt ml-3">contacts</i>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 card-group-row__col">
+                                    <div class="card card-group-row__card">
+                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
+                                            <div class="flex">
+                                                <div class="card-header__title text-muted mb-2 d-flex">All students</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM student WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
+                                                </div>
+                                            <div><i class="material-icons icon-muted icon-40pt ml-3">people</i>
                                             </div>
+                                        </div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 100%;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 card-group-row__col">
+                                    <div class="card card-group-row__card">
+                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
+                                            <div class="flex">
+                                            <div class="card-header__title text-muted mb-2 d-flex">All parents</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM parent WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
+                                                </div>
+                                            <div><i class="material-icons icon-muted icon-40pt ml-3">people</i>
+                                            </div>
+                                        </div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"
+                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
+                            <?php } ?>
                             <!-- END FIRST TAB CONTENT -->
-                        </div>
-                        <div class="tab-pane fade" id="activity_purchases">
+
                             <!-- SECOND TAB CONTENT -->
+                            <?php if($role == 'parent' || $role == 'student'){ ?>
+                            <div class="row card-group-row">
+                                <div class="col-lg-4 col-md-6 card-group-row__col">
+                                    <div class="card card-group-row__card">
+                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
+                                            <div class="flex">
+                                                <div class="card-header__title text-muted mb-2 d-flex">All staff</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM staff WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
+                                                </div>
+                                                <div><i class="material-icons icon-muted icon-40pt ml-3">people</i></div>
+                                            </div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-warning" role="progressbar" style="width: 100%;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 card-group-row__col">
+                                    <div class="card card-group-row__card">
+                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
+                                            <div class="flex">
+                                                <div class="card-header__title text-muted mb-2 d-flex">All students</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM student WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
+                                                </div>
+                                            <div><i class="material-icons icon-muted icon-40pt ml-3">people</i>
+                                            </div>
+                                        </div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar" role="progressbar" style="width: 100%;"
+                                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 card-group-row__col">
+                                    <div class="card card-group-row__card">
+                                        <div class="card-body-x-lg card-body d-flex flex-row align-items-center">
+                                            <div class="flex">
+                                            <div class="card-header__title text-muted mb-2 d-flex">All parents</div>
+                                                    <?php
+                                                        $query = "SELECT * FROM parent WHERE deleted != 'Yes'";
+                                                        $query = $conn->query($query);
+                                                        $rows = $query->num_rows;
+                                                    ?>
+                                                    <span class="h4 m-0"><?php echo number_format($rows) ?></span>
+                                                </div>
+                                            <div><i class="material-icons icon-muted icon-40pt ml-3">people</i>
+                                            </div>
+                                        </div>
+                                        <div class="progress" style="height: 3px;">
+                                            <div class="progress-bar bg-success" role="progressbar" style="width: 100%;"
+                                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+                             <!-- END SECOND TAB -->
 
-
-
-                            <!-- END SECOND TAB -->
                         </div>
                         <div class="tab-pane fade" id="activity_emails">
                             Ducimus aperiam aut corporis, facere nobis id quos dignissimos, ut corrupti asperiores

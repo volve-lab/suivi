@@ -1,3 +1,5 @@
+<?php include("../session.php"); ?>
+
 <div class="mdk-drawer  js-mdk-drawer" id="default-drawer" data-align="start">
         <div class="mdk-drawer__content">
             <div class="sidebar sidebar-dark sidebar-left bg-dark-gray" data-perfect-scrollbar>
@@ -45,6 +47,8 @@
                                 <span class="sidebar-menu-text">Dashboard</span>
                             </a>
                         </li>
+
+                        <?php if($role == 'administrator'){ ?>
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="role-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">queue_play_next</i>
@@ -69,6 +73,8 @@
                                 <span class="sidebar-menu-text">Users</span>
                             </a>
                         </li>
+                        <?php } ?>
+                        <?php if($role == 'administrator' || $role == 'staff'){ ?>
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="student-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
@@ -81,6 +87,8 @@
                                 <span class="sidebar-menu-text">Parents</span>
                             </a>
                         </li>
+                        <?php } ?>
+                        <?php if($role == 'administrator'){ ?>
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="course-list.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
@@ -93,7 +101,15 @@
                                 <span class="sidebar-menu-text">Staff</span>
                             </a>
                         </li>
-
+                        <?php } ?> 
+                        <?php if($role == 'parent' || $role == 'student'){ ?>
+                        <li class="sidebar-menu-item"> 
+                            <a class="sidebar-menu-button" href="student-all-actions.php?student-id=<?php echo $user_id; ?>">
+                                <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">star_half</i>
+                                <span class="sidebar-menu-text">Student</span>
+                            </a> 
+                        </li>
+                        <?php } ?>
                         <li class="sidebar-menu-item">
                             <a class="sidebar-menu-button" href="login.php">
                                 <i class="sidebar-menu-icon sidebar-menu-icon--left material-icons">exit_to_app</i>

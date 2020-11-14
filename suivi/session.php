@@ -17,8 +17,12 @@ else
 		$arr = $query->fetch_array();
 		$user_id = $arr['id'];
 		$names = $arr['username'];
-		$role = $arr['user_type_id'];
-		// $phone = $arr['phone'];
+		$role_id = $arr['user_type_id'];
+		
+		$query2 = "SELECT * FROM usertype WHERE id='$role_id' AND deleted != 'yes'";
+		$query2 = $conn->query($query2);
+		$row = $query2->fetch_assoc();
+		$role = $row['name'];
 	}
 	else
 	{

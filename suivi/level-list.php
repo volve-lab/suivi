@@ -111,7 +111,9 @@
                     <div class="container-fluid page__container">
                         <div class="row">
                             <div class="col col-md-6"><h1 class="mb-0">Level list</h1></div>
+                            <?php if($role == 'administrator'){ ?>
                             <div class="col col-md-6"><a href="level-add.php" class="btn btn-primary float-right">add Level</a></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

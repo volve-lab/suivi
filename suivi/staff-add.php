@@ -14,7 +14,7 @@ if (isset($_POST['submit'])) {
     $uuid = gen_uuid();
 
     
-    $query = "SELECT * FROM usertype WHERE name='student' AND deleted != 'yes'";
+    $query = "SELECT * FROM usertype WHERE name='staff' AND deleted != 'yes'";
     $query = $conn->query($query);
     $row = $query->fetch_assoc();
     $userTypeId = $row['id'];

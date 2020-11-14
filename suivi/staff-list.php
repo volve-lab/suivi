@@ -15,7 +15,11 @@
     <!-- Perfect Scrollbar -->
     <link type="text/css" href="assets/vendor/perfect-scrollbar.css" rel="stylesheet">
 
-    <!           m- Material Design Icons -->
+    <!-- App CSS -->
+    <link type="text/css" href="assets/css/app.css" rel="stylesheet">
+    <link type="text/css" href="assets/css/app.rtl.css" rel="stylesheet">
+
+    <!-- Material Design Icons -->
     <link type="text/css" href="assets/css/vendor-material-icons.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-material-icons.rtl.css" rel="stylesheet">
 
@@ -107,7 +111,9 @@
                     <div class="container-fluid page__container">
                         <div class="row">
                             <div class="col col-md-6"><h1 class="mb-0">Staff list</h1></div>
+                            <?php if($role == 'administrator'){ ?>
                             <div class="col col-md-6"><a href="staff-add.php" class="btn btn-primary float-right">add staff</a></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -128,7 +134,9 @@
                                                 <th>phone</th>
                                                 <th>staff role</th>
                                                 <th>Created on</th>
+                                                <?php if($role == 'administrator'){ ?>
                                                 <th>Action</th>
+                                                <?php } ?>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -152,7 +160,9 @@
                                                 <td><?php echo $row['phone']; ?></td>
                                                 <td><?php echo $rowRole['name']; ?></td>
                                                 <td><?php echo $row['created_on']; ?></td>
+                                                <?php if($role == 'administrator'){ ?>
                                                 <td><Button class="btn btn-info">Edit</Button></td>
+                                                <?php } ?>
                                             </tr>
                                             <?php }} ?>
 

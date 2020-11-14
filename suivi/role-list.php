@@ -111,7 +111,9 @@
                     <div class="container-fluid page__container">
                         <div class="row">
                             <div class="col col-md-6"><h1 class="mb-0">Role list</h1></div>
+                            <?php if($role == 'administrator'){ ?>
                             <div class="col col-md-6"><a href="role-add.php" class="btn btn-primary float-right">add role</a></div>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

@@ -41,7 +41,7 @@ if (isset($_POST['permission'])) {
         $data = http_build_query ($data);
     
         $username="gapfizi";
-        $password="pass123";
+        $password="pass123"; 
         
         //open connection
         $ch = curl_init();
@@ -61,9 +61,9 @@ if (isset($_POST['permission'])) {
         curl_close($ch);
 
         // send_message('0788211579',$description);
-        header("Location: student-all-actions.php?student-id='$studentId'&success");
+        header("Location: student-all-actions.php?student-id='$studentId'&success-permission");
     }else {
-        header("Location: student-all-actions.php?student-id='$studentId'&error");
+        header("Location: student-all-actions.php?student-id='$studentId'&error-permission");
     }
 }
 
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
     $date = date('Y-m-d');
     $uuid = gen_uuid();
  
-    $query = "INSERT INTO disciplineMarks(id, student_id, marks, comment, created_on, deleted) VALUES ('$uuid', '$studentId', '$marks', '$comment', '$date', 'no')";
+    $query = "INSERT INTO disciplinemarks(id, student_id, marks, comment, created_on, deleted) VALUES ('$uuid', '$studentId', '$marks', '$comment', '$date', 'no')";
     if($conn->query($query)){
         header("Location: student-all-actions.php?student-id=$studentId&success");
     }else {
@@ -121,8 +121,6 @@ $rowStudent = $query->fetch_assoc();
     <!-- datatable -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-
-
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-115115077-4"></script>
     <script>
@@ -165,20 +163,13 @@ $rowStudent = $query->fetch_assoc();
             src="https://www.facebook.com/tr?id=340571383230227&amp;ev=PageView&amp;noscript=1" /></noscript>
     <!-- End Facebook Pixel Code -->
 
-
-
-
     <!-- Flatpickr -->
     <link type="text/css" href="assets/css/vendor-flatpickr.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-flatpickr.rtl.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-flatpickr-airbnb.css" rel="stylesheet">
     <link type="text/css" href="assets/css/vendor-flatpickr-airbnb.rtl.css" rel="stylesheet">
-
     <!-- Vector Maps -->
     <link type="text/css" href="assets/vendor/jqvmap/jqvmap.min.css" rel="stylesheet">
-
-
-
 </head>
 
 <body class="layout-default">
@@ -199,9 +190,11 @@ $rowStudent = $query->fetch_assoc();
                         <div class="row">
                             <div class="col col-md-6"><h1 class="mb-0">Student status</h1></div>
                             <div class="col col-md-6">
+                            <?php if($role == 'staff' || $role == 'administrator'){ ?>
                                 <a href="student-list.php" class="text-dark-gray ml-2 float-right">
                                     <i class="material-icons">reply</i>
                                 </a>
+                            <?php } ?>
                             </div>
                         </div>
                     </div>
@@ -221,7 +214,18 @@ $rowStudent = $query->fetch_assoc();
                     <div class="tab-content">
                     
                         <div class="tab-pane active show fade" id="permission">
-                            <!-- FIRST TAB CONTENT DISPLINE -->
+                            <!-- 1 FIRST TAB CONTENT permission -->
+
+                            <?php if(isset($_GET['success-permission'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> action performed</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error-permission'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
+                              
+                                <div class="row">
+                                <?php if($role == 'staff'){ ?>
+                                <div class="col-md-12">
                                     <form action="" method="post">
                                         <div class="row">
                                             <div class="col">
@@ -268,20 +272,119 @@ $rowStudent = $query->fetch_assoc();
                                             </div>
                                         </div>
                                     </form>
+                              </div>
+                              <?php } ?>
 
-                            <!-- END FIRST TAB CONTENT DISPLINE -->
+                              <div class="col-md-12">
+                                    <table id="example" class="table table-bordered" style="width:100%; background:#46BEDB">
+                                        <thead>
+                                            <tr>
+                                                <th>Permission</th>
+                                                <th>Start</th>
+                                                <th>End</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+											$query = "SELECT * FROM permission WHERE deleted != 'Yes'";
+											$query = $conn->query($query);
+												while($row = $query->fetch_assoc()){
+										?>
+                                            <tr>
+                                                <td><?php echo $row['description']; ?></td>
+                                                <td><?php echo $row['start_date'] . 'at' . $row['start_time']; ?></td>
+                                                <td><?php echo $row['end_date'] . 'at' . $row['end_time']; ?></td>
+                                            </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>    
+                            <!-- 1 END FIRST TAB CONTENT permission -->
                         </div>
-                        <div class="tab-pane fade" id="course-marks">
-                            <!-- SECOND TAB CONTENT REPORT -->
+                        
+                        <div class="tab-pane fade" id="discipline-marks">
+                            <!-- 2 THIRD TAB CONTENT discipline -->
 
-                                <?php if(isset($_GET['success'])){ ?>
-                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
+                            <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> action performed</div>
                               <?php } ?>
                               <?php if(isset($_GET['error'])){ ?>
                               <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
                               <?php } ?>
 
                             <div class="row">
+                            <?php if($role == 'staff'){ ?>
+                                <div class="col-md-12">
+                                    <form action="" method="post">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label >Comment</label>
+                                                    <textarea name="comment" type="text" class="form-control" rows="4" cols="50" placeholder="Write a comment"> </textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="row">
+                                                    <div class="col col-md-12">
+                                                        <div class="form-group">
+                                                            <label >Marks</label>
+                                                            <input name="marks" type="text" class="form-control" placeholder="Enter marks to remove">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col col-md-12">
+                                                        <div class="form-group">
+                                                            <button type="submit" name="submit" class="btn btn-primary">submit</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>    
+                                        </div>   
+                                    </form>
+                                </div>
+                            <?php } ?>
+                                <div class="col-md-12">
+                                    <table id="example" class="table table-bordered" style="width:100%; background:#FFCD5A">
+                                        <thead>
+                                            <tr>
+                                                <th>Marks/50</th>
+                                                <th>Comment</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                                $query = "SELECT * FROM disciplinemarks WHERE deleted != 'yes' ORDER BY created_on DESC";
+                                                $query = $conn->query($query);
+                                                $rows = $query->num_rows;
+                                                    while($row = $query->fetch_assoc()){
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $row['marks']; ?></td>
+                                                    <td><?php echo $row['comment']; ?></td>
+                                                    <td><?php echo $row['created_on']; ?></td>
+                                                </tr> 
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- 2 END THIRD TAB discipline-->
+                        </div>
+
+                        <div class="tab-pane fade" id="course-marks">
+                            <!-- 3 SECOND TAB CONTENT course-marks -->
+
+                                <?php if(isset($_GET['success'])){ ?>
+                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> action performed</div>
+                              <?php } ?>
+                              <?php if(isset($_GET['error'])){ ?>
+                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
+                              <?php } ?>
+
+                            <div class="row">
+                            <?php if($role == 'staff'){ ?>
                                 <div class="col-md-12">
                                     <form action="script.php" method="post" enctype="multipart/form-data">
                                         <div class="row">
@@ -299,8 +402,9 @@ $rowStudent = $query->fetch_assoc();
                                         </div>   
                                     </form>
                                 </div>
+                            <?php } ?>
                                 <div class="col-md-12">
-                                    <table id="example" class="table table-bordered" style="width:100%; background:#FFF">
+                                    <table id="example" class="table table-bordered" style="width:100%; background:#59BB4C">
                                         <thead>
                                             <tr>
                                                 <th>Course</th>
@@ -327,83 +431,9 @@ $rowStudent = $query->fetch_assoc();
                                 </div>
                             </div>
 
-                            <!-- END SECOND TAB REPORT -->
+                            <!-- 3 END SECOND TAB course-marks -->
                         </div>
-                        <div class="tab-pane fade" id="discipline-marks">
-                            <!-- THIRD TAB CONTENT PERMISSION -->
 
-                            <?php if(isset($_GET['success'])){ ?>
-                              <div class="alert alert-success alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Successfully!</strong> Registered New Staff</div>
-                              <?php } ?>
-                              <?php if(isset($_GET['error'])){ ?>
-                              <div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Something went wrong, Try again !</div>
-                              <?php } ?>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <form action="" method="post">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label >Marks</label>
-                                                    <input name="marks" type="text" class="form-control" placeholder="Enter marks to remove">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12">
-                                                <div class="form-group">
-                                                    <label >Comment</label>
-                                                    <textarea name="comment" type="text" class="form-control" rows="4" cols="50" placeholder="Write a comment"> </textarea>
-                                                </div>
-                                            </div>
-                                            <div class="col col-md-12 mt-4">
-                                                <div class="form-group">
-                                                    <button type="submit" name="submit" class="btn btn-primary">submit</button>
-                                                </div>
-                                            </div>
-                                        </div>   
-                                    </form>
-                                </div>
-                                <div class="col-md-8">
-                                    <table id="example" class="table table-bordered" style="width:100%; background:#FFCD5A">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Marks/50</th>
-                                                <th>Comment</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <?php
-											// $query = "SELECT * FROM disciplineMarks WHERE deleted != 'yes'";
-											// $query = $conn->query($query);
-											// $rows = $query->num_rows;
-											// 	while($row = $query->fetch_assoc()){
-										?>
-                                            <!-- <tr>
-                                                <td><?php// echo $rowStudent['name']; ?></td>
-                                                <td><?php// echo $row['marks']; ?></td>
-                                                <td><?php// echo $row['comment']; ?></td>
-                                            </tr> -->
-
-                                            <tr>
-                                                <td> out of class</td>
-                                                <td>5</td>
-                                                <td>Found out of the class </td>
-                                            </tr>
-                                            <tr>
-                                                <td> out of class</td>
-                                                <td>5</td>
-                                                <td>Found out of the class </td>
-                                            </tr>
-
-                                            <?php //} ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- END THIRD TAB PERMISSION-->
-                        </div>
                         <div class="tab-pane fade" id="activity_emails">
                             Ducimus aperiam aut corporis, facere nobis id quos dignissimos, ut corrupti asperiores
                             reprehenderit culpa praesentium exercitationem, officia commodi.

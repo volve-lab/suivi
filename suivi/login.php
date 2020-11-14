@@ -5,11 +5,11 @@ include("lib/config/config.php");
 include("uuid.php");
 $id = gen_uuid();
 $date = date('Y-m-d');
-$query = "SELECT * FROM users WHERE user_type_id = 'Administrator'";
+$query = "SELECT * FROM users WHERE user_type_id = '1a35b440-12f4-43ae-8444-d54793667c2a'";
 $query = $conn->query($query);
 if($query->num_rows == 0) {
     // pass=admin@123
-    $query = "INSERT INTO users (id, username, password, user_id, user_type_id, status, created_on, deleted) VALUES('$id', 'admin', 'e6e061838856bf47e1de730719fb2609', '', 'Administrator', 'Active', '$date', '');";
+    $query = "INSERT INTO users (id, username, password, user_id, user_type_id, status, created_on, deleted) VALUES('$id', 'admin', 'e6e061838856bf47e1de730719fb2609', '', '1a35b440-12f4-43ae-8444-d54793667c2a', 'Active', '$date', '');";
     $query = $conn->query($query);
 }
 
@@ -37,9 +37,8 @@ if (isset($_POST['submit'])) {
     $user_email = $arr['username'];
     $user_id = $arr['id'];
     $user_status = $arr['status'];
-
-    // echo 'password '. $arr['password'];
-
+    $pass = $arr['password'];
+    // $user_type = $arr['user_type_id'];
     if ($rows == 1)
     {
         if ($user_status != "Inactive") 
@@ -54,39 +53,38 @@ if (isset($_POST['submit'])) {
         }
     }
 
+    else 
+    {
+    if($pass == ""){
+        $querySelect = "UPDATE users SET password = '$password' WHERE username = '$username'";
+        if($conn->query($querySelect)){
+            $query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
+            $query = $conn->query($query);
+            $rows = $query->num_rows;
+            $arr = $query->fetch_array();
+            $user_email = $arr['username'];
+            $user_id = $arr['id'];
+            $user_status = $arr['status'];
 
-    // else 
-    // {
-    // if($arr['password'] == ""){
-    //     $querySelect = "UPDATE users SET password = '$password' WHERE username = '$username'";
-    //     if($conn->query($querySelect)){
-    //         $query = "SELECT * FROM users WHERE password = '$password' AND username = '$username' LIMIT 1";
-    //         $query = $conn->query($query);
-    //         $rows = $query->num_rows;
-    //         $arr = $query->fetch_array();
-    //         $user_email = $arr['username'];
-    //         $user_id = $arr['id'];
-    //         $user_status = $arr['status'];
+            if ($rows == 1)
+            {
+                if ($user_status != "Inactive") 
+                {
+                    $_SESSION['logged_user_info'] = $user_id; // Initializing Session
+                    $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
+                    header("Location: redirect.php?_rdr"); // Redirecting To Other Page
+                }
+                else
+                {
+                    $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
+                }
+            }
+                }
 
-    //         if ($rows == 1)
-    //         {
-    //             if ($user_status != "Inactive") 
-    //             {
-    //                 $_SESSION['logged_user_info'] = $user_id; // Initializing Session
-    //                 $_SESSION['logged_user_info_type'] = "users"; // Initializing Session
-    //                 header("Location: redirect.php?_rdr"); // Redirecting To Other Page
-    //             }
-    //             else
-    //             {
-    //                 $error='<div class="alert alert-warning alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Account Inactive. Contact Administrator for Support!</div>';
-    //             }
-    //         }
-    //             }
-
-    //         } else {
-    //             $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
-    //         }
-    //     }
+            } else {
+                $error='<div class="alert alert-danger alert-dismissable"><button type="button" data-dismiss="alert" aria-hidden="true" class="close">×</button></span><strong>Oops!</strong> Invalid Username, Email or Password</div>';
+            }
+        }
 }
 ?>
 
