@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Nov 02, 2020 at 07:22 AM
+-- Generation Time: Nov 16, 2020 at 06:13 AM
 -- Server version: 5.7.32-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.7
 
@@ -65,7 +65,9 @@ INSERT INTO `disciplinemarks` (`id`, `marks`, `comment`, `created_on`, `deleted`
 ('15e9b0b9-ce15-4efe-8e35-46d2324cf1b9', 10, ' drink beer', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
 ('2e1615e8-9051-42a3-9fe2-a030916233f0', 5, ' fsd', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
 ('50a7d596-9658-47c2-84d1-e20dea18cfc0', 5, ' Going out without permission', '2020-10-14', 'no', '70eb22a-9d06-408e-9107-cad9f25da765'),
-('bac31fc2-06aa-4ca9-8d48-b26d21e526f0', 4, ' out of class', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765');
+('93c4eba2-5c0f-4b22-9db4-9f4935619228', 5, ' Going out', '2020-11-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('bac31fc2-06aa-4ca9-8d48-b26d21e526f0', 4, ' out of class', '2020-10-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
+('fc173b58-e57e-4e12-be74-ce8b412d69f9', 10, ' drink beer', '2020-11-14', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765');
 
 -- --------------------------------------------------------
 
@@ -152,7 +154,8 @@ CREATE TABLE `parent` (
 --
 
 INSERT INTO `parent` (`id`, `firstname`, `lastname`, `gender`, `phone`, `email`, `created_on`, `deleted`) VALUES
-('cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', 'Sam', 'Umusaza', 'Male', '0788211578', 'sam@gmail.com', '2020-10-10', 'no');
+('295de526-5fcf-4316-b8f8-988424374e5d', 'Blaise', 'Irakoze', 'Male', '0788211579', 'blaise@gmail.com', '2020-11-14', 'no'),
+('cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', 'Sam', 'Umusaza', 'Male', '0788211579', 'sam@gmail.com', '2020-10-10', 'no');
 
 -- --------------------------------------------------------
 
@@ -177,10 +180,14 @@ CREATE TABLE `permission` (
 --
 
 INSERT INTO `permission` (`id`, `description`, `start_date`, `end_date`, `start_time`, `end_time`, `created_on`, `deleted`, `student_id`) VALUES
-('382d36e9-346a-4726-b20a-de400d70ad6a', 'permission', '2020-10-19', '2020-10-30', '02:00:00', '04:00:00', '2020-10-30', 'no', ''),
+('0e78cb3e-447f-4ee2-9f8a-a0ac95ff278b', ' Sick permission', '2020-11-16', '2020-11-21', '13:00:00', '14:00:00', '2020-11-16', 'no', 'e5bf8958-c30f-4857-8498-47e89f5b30bf'),
+('1b2039ac-6dfe-4bee-b67c-c80e3905c004', ' gfd', '2020-11-16', '2020-11-18', '01:00:00', '01:00:00', '2020-11-16', 'no', '\'\'e5bf8958-c30f-4857-8498-47e89f5b30bf\'\''),
 ('38bd97a6-a456-4e95-b1f8-d720fda42b63', '  sickness permission', '2020-10-30', '2020-10-31', '00:00:00', '15:00:00', '2020-10-30', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
 ('3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', ' sickness', '2020-10-11', '2020-10-17', '00:00:00', '00:00:00', '2020-10-11', 'no', 'f70eb22a-9d06-408e-9107-cad9f25da765'),
-('77d89c43-e5c2-48aa-954e-76b4ac428141', ' dgdf', '2020-10-23', '2020-10-31', '00:00:00', '16:00:00', '2020-10-30', 'no', '\'');
+('495e3e0d-fb85-4e3c-91f2-e55f7ce675f1', ' Sick permission', '2020-11-16', '2020-11-21', '01:00:00', '01:00:00', '2020-11-16', 'no', 'e5bf8958-c30f-4857-8498-47e89f5b30bf'),
+('a98fb82f-b598-4560-89fc-39ff8006a804', 'sick permission', '2020-11-16', '2020-11-23', '01:00:00', '02:00:00', '2020-11-16', 'no', 'e5bf8958-c30f-4857-8498-47e89f5b30bf'),
+('d395afef-c456-4b45-a1be-c0fb59f3c409', ' Wedding permission', '2020-11-18', '2020-11-23', '00:00:00', '01:00:00', '2020-11-16', 'no', 'e5bf8958-c30f-4857-8498-47e89f5b30bf'),
+('e9c7ac9b-dda3-41e2-81fc-31ca0d198225', ' fsd', '2020-11-17', '2020-11-09', '01:00:00', '01:00:00', '2020-11-16', 'no', '\'e5bf8958-c30f-4857-8498-47e89f5b30bf\'');
 
 -- --------------------------------------------------------
 
@@ -226,7 +233,9 @@ CREATE TABLE `staff` (
 --
 
 INSERT INTO `staff` (`id`, `firstname`, `lastname`, `gender`, `phone`, `staff_role_id`, `created_on`, `deleted`) VALUES
-('76487962-b0f2-4102-9de2-9316fbfdec35', 'Ntwari', 'Yvan', 'Male', '0788211578', '2374fd1e-ed4b-4c33-8405-9aa423a1d6a2', '2020-10-10', 'no');
+('33b48396-bd7a-4ed7-a194-e3b7bac841e8', 'Angel', 'Uwimana', 'Female', '0788888888', '7903d85c-8583-4b88-8236-50ae85df9d3e', '2020-11-14', 'no'),
+('76487962-b0f2-4102-9de2-9316fbfdec35', 'Ntwari', 'Yvan', 'Male', '0788211578', '2374fd1e-ed4b-4c33-8405-9aa423a1d6a2', '2020-10-10', 'no'),
+('d17b44d4-c6d5-4f77-8602-10787ef2f7bf', 'Mukwende ', 'Placide', 'Male', '0788211578', 'b2b4bd78-24ec-49e9-a39a-bfcc78c6f0d9', '2020-11-14', 'no');
 
 -- --------------------------------------------------------
 
@@ -274,6 +283,7 @@ CREATE TABLE `student` (
 --
 
 INSERT INTO `student` (`id`, `firstname`, `lastname`, `gender`, `parent_id`, `level_id`, `created_on`, `deleted`) VALUES
+('e5bf8958-c30f-4857-8498-47e89f5b30bf', 'Levi', 'Ganza', 'Male', '295de526-5fcf-4316-b8f8-988424374e5d', 'e02880cc-458c-4599-8fa4-8153c605c5ee', '2020-11-14', 'no'),
 ('f70eb22a-9d06-408e-9107-cad9f25da765', 'Blaise', 'Irakoze', 'Male', 'cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', '132f2b0e-933f-424c-b948-5ae8b2ed12be', '2020-10-10', 'no');
 
 -- --------------------------------------------------------
@@ -299,12 +309,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `user_id`, `user_type_id`, `status`, `created_on`, `deleted`) VALUES
 ('75956970-672e-4fd4-ae7a-ff9d576956b9', 'yvan', '', '76487962-b0f2-4102-9de2-9316fbfdec35', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-10-10', 'no'),
-('9b5fbbc1-b52f-44c5-bccd-c2ca19498abc', '', '', '8fc55f81-749b-4451-b5b2-2477a16c8cd6', '', 'Active', '2020-10-11', 'no'),
-('b00048fd-22a7-4f6c-86f4-27ba0b8afe9f', 'sam', 'c585165487bc69e2bbfabc9cee515b8b', 'cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', '115a3f3c-e09c-4f8a-827f-cf909ba73a11', 'Active', '2020-10-10', 'no'),
-('bee53e8a-f3b2-41db-9cf2-8074dfdd6901', '', '', '3b3e2fe1-721c-4e5f-b17f-b03d83d6803b', '', 'Active', '2020-10-11', 'no'),
-('d0a4dafd-530c-4b8a-b34a-4ae7ce7d38ef', 'admin', '4ec503be252d765ea37621a629afdaa6', '', 'Administrator', 'Active', '2020-10-10', ''),
+('b00048fd-22a7-4f6c-86f4-27ba0b8afe9f', 'sam', '332532dcfaa1cbf61e2a266bd723612c', 'cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', '115a3f3c-e09c-4f8a-827f-cf909ba73a11', 'Active', '2020-10-10', 'no'),
+('c8e66c6a-9661-4302-96a1-a68ec1594ebc', 'mukwende ', '', 'd17b44d4-c6d5-4f77-8602-10787ef2f7bf', '4acad40b-2b2e-415b-9608-9fc5a5f50488', 'Active', '2020-11-14', 'no'),
+('cf71c86e-764a-4289-9b4e-8c4c6ccbb704', 'angel', 'f4f068e71e0d87bf0ad51e6214ab84e9', '33b48396-bd7a-4ed7-a194-e3b7bac841e8', '4acad40b-2b2e-415b-9608-9fc5a5f50488', 'Active', '2020-11-14', 'no'),
 ('d82d6b4f-898c-463c-a8f9-2f38e3c7a335', 'blaise', '6a3611785d499d8821a0d9b24d464e0f', 'f70eb22a-9d06-408e-9107-cad9f25da765', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-10-10', 'no'),
-('e9b25b2d-a313-453f-8dfb-20c4672b8ebb', 'admin', '21232f297a57a5a743894a0e4a801fc3', '', '1a35b440-12f4-43ae-8444-d54793667c2a', 'Active', '2020-09-21', 'no');
+('dbda01f9-ef8d-4cac-bd0d-a93faf168761', 'levi', '', 'e5bf8958-c30f-4857-8498-47e89f5b30bf', 'caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'Active', '2020-11-14', 'no'),
+('e9b25b2d-a313-453f-8dfb-20c4672b8ebb', 'admin', 'd41d8cd98f00b204e9800998ecf8427e', '', '1a35b440-12f4-43ae-8444-d54793667c2a', 'Active', '2020-09-21', 'no');
 
 -- --------------------------------------------------------
 
@@ -324,12 +334,9 @@ CREATE TABLE `usertype` (
 --
 
 INSERT INTO `usertype` (`id`, `name`, `created_on`, `deleted`) VALUES
-('0397944c-8178-4ff7-85bc-8b8e49ea48f0', 'dean of study', '2020-10-10', 'no'),
 ('115a3f3c-e09c-4f8a-827f-cf909ba73a11', 'parent', '2020-09-22', 'no'),
 ('1a35b440-12f4-43ae-8444-d54793667c2a', 'administrator', '2020-10-10', 'no'),
 ('4acad40b-2b2e-415b-9608-9fc5a5f50488', 'staff', '2020-09-22', 'no'),
-('b1b482ae-c103-436e-b798-315df42964a6', 'disciplineMaster', '2020-10-10', 'no'),
-('b4a4cfe3-b74c-4fb7-956b-ec2f1f4ff06b', 'patron', '2020-10-10', 'no'),
 ('caaf2f1e-139c-4f42-b303-28fc3d3bffe0', 'student', '2020-09-22', 'no');
 
 --
@@ -388,7 +395,8 @@ ALTER TABLE `student`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `usertype`

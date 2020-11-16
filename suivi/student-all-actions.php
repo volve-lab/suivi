@@ -7,10 +7,12 @@
 // -end date time
 // -created-on date
 // -deleted boolean 
-
+ 
 include("uuid.php"); 
 
 $studentId = $_GET['student-id'];
+
+
 
 if (isset($_POST['permission'])) {
 
@@ -22,17 +24,87 @@ if (isset($_POST['permission'])) {
     $date = date('Y-m-d');
     $uuid = gen_uuid();
     $receiver = '0788211579';
- 
+    
     $query = "INSERT INTO permission(id, student_id, description, start_date, end_date, start_time, end_time, created_on, deleted) VALUES ('$uuid', '$studentId', '$description', '$startDate', '$endDate', '$startTime', '$endTime', '$date', 'no')";
     if($conn->query($query)){
-        // $uuidId = gen_uuid();
-        // $query = "INSERT INTO users(id, username, password, user_type_id, user_id, status, created_on, deleted) VALUES ('$uuidId', '$username', '', '$userTypeId', '$uuid', 'Active', '$date', 'no')";
-        // $query = $conn->query($query);
+       
+        $queryStudent = "SELECT * FROM student WHERE id = '$studentId' AND deleted != 'yes'";
+        $queryStudent = $conn->query($queryStudent);
+        $rowStudent = $queryStudent->fetch_assoc(); 
+        $firstName = $rowStudent['firstname'];
+        $lastname = $rowStudent['lastname'];
+        $parentId =  $rowStudent['parent_id'];
 
+        $queryParent = "SELECT * FROM parent WHERE id = '$parentId' AND deleted != 'yes'";
+        $queryParent = $conn->query($queryParent);
+        $rowParent = $queryParent->fetch_assoc();
+        $firstName = $rowParent['firstname'];
+        $lastname = $rowParent['lastname'];
+        $phone =  $rowParent['phone'];
 
         $data = array(      
-            "sender"=>"Suivi",
-            "recipients"=>$receiver,
+            "sender"=>"$firstName . ' PERMISSION'",
+            "recipients"=>$phone,
+            "message"=>$description .'\n'. 'From: ' . $startDate . 'To: ' . $endDate,        
+        );
+    
+        $url = "https://www.intouchsms.co.rw/api/sendsms/.json";
+        
+        $data = http_build_query ($data);
+    
+        $username="gapfizi";
+        $password="pass123"; 
+        
+        //open connection
+        $ch = curl_init();
+    
+        //set the url, number of POST vars, POST data
+        curl_setopt($ch,CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERPWD, $username . ":" . $password);  
+        curl_setopt($ch,CURLOPT_POST,true);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch,CURLOPT_POSTFIELDS, $data);
+    
+        //execute post
+        $result = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        //close connection
+        curl_close($ch);
+
+        header("Location: student-all-actions.php?student-id='$studentId'&success-permission");
+    }else {
+        header("Location: student-all-actions.php?student-id='$studentId'&error-permission");
+    }
+}
+
+if (isset($_POST['submit'])) {
+
+    $description=$_POST['comment'];
+    $marks = $_POST['marks'];
+    $date = date('Y-m-d');
+    $uuid = gen_uuid();
+ 
+    $query = "INSERT INTO disciplinemarks(id, student_id, marks, comment, created_on, deleted) VALUES ('$uuid', '$studentId', '$marks', '$comment', '$date', 'no')";
+    if($conn->query($query)){
+
+        $queryStudent = "SELECT * FROM student WHERE id = '$studentId' AND deleted != 'yes'";
+        $queryStudent = $conn->query($queryStudent);
+        $rowStudent = $queryStudent->fetch_assoc(); 
+        $firstName = $rowStudent['firstname'];
+        $lastname = $rowStudent['lastname'];
+        $parentId =  $rowStudent['parent_id'];
+
+        $queryParent = "SELECT * FROM parent WHERE id = '$parentId' AND deleted != 'yes'";
+        $queryParent = $conn->query($queryParent);
+        $rowParent = $queryParent->fetch_assoc();
+        $firstName = $rowParent['firstname'];
+        $lastname = $rowParent['lastname'];
+        $phone =  $rowParent['phone'];
+
+        $data = array(      
+            "sender"=>"$firstName . ' DISCIPLINE'",
+            "recipients"=>$phone,
             "message"=>$description,        
         );
     
@@ -60,31 +132,15 @@ if (isset($_POST['permission'])) {
         //close connection
         curl_close($ch);
 
-        // send_message('0788211579',$description);
-        header("Location: student-all-actions.php?student-id='$studentId'&success-permission");
-    }else {
-        header("Location: student-all-actions.php?student-id='$studentId'&error-permission");
-    }
-}
-
-if (isset($_POST['submit'])) {
-
-    $comment=$_POST['comment'];
-    $marks = $_POST['marks'];
-    $date = date('Y-m-d');
-    $uuid = gen_uuid();
- 
-    $query = "INSERT INTO disciplinemarks(id, student_id, marks, comment, created_on, deleted) VALUES ('$uuid', '$studentId', '$marks', '$comment', '$date', 'no')";
-    if($conn->query($query)){
         header("Location: student-all-actions.php?student-id=$studentId&success");
     }else {
         header("Location: student-all-actions.php?student-id=$studentId&error");
     }
 }
 
-$queryStudent = "SELECT * FROM student WHERE id='$studentId' deleted != 'yes'";
-$queryStudent = $conn->query($queryStudent);
-$rowStudent = $query->fetch_assoc();
+// $queryStudent = "SELECT * FROM student WHERE id='$studentId' deleted != 'yes'";
+// $queryStudent = $conn->query($queryStudent);
+// $rowStudent = $query->fetch_assoc();
 
 ?>
 <!DOCTYPE html>
@@ -213,7 +269,7 @@ $rowStudent = $query->fetch_assoc();
                 
                     <div class="tab-content">
                     
-                        <div class="tab-pane active show fade" id="permission">
+                        <div class="tab-pane active show fade" id="permission" style="margin-bottom: 7rem">
                             <!-- 1 FIRST TAB CONTENT permission -->
 
                             <?php if(isset($_GET['success-permission'])){ ?>
@@ -303,7 +359,7 @@ $rowStudent = $query->fetch_assoc();
                             <!-- 1 END FIRST TAB CONTENT permission -->
                         </div>
                         
-                        <div class="tab-pane fade" id="discipline-marks">
+                        <div class="tab-pane fade" id="discipline-marks" style="margin-bottom: 7rem">
                             <!-- 2 THIRD TAB CONTENT discipline -->
 
                             <?php if(isset($_GET['success'])){ ?>
@@ -373,7 +429,7 @@ $rowStudent = $query->fetch_assoc();
                             <!-- 2 END THIRD TAB discipline-->
                         </div>
 
-                        <div class="tab-pane fade" id="course-marks">
+                        <div class="tab-pane fade" id="course-marks" style="margin-bottom: 7rem">
                             <!-- 3 SECOND TAB CONTENT course-marks -->
 
                                 <?php if(isset($_GET['success'])){ ?>
