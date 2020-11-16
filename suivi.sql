@@ -154,8 +154,8 @@ CREATE TABLE `parent` (
 --
 
 INSERT INTO `parent` (`id`, `firstname`, `lastname`, `gender`, `phone`, `email`, `created_on`, `deleted`) VALUES
-('295de526-5fcf-4316-b8f8-988424374e5d', 'Blaise', 'Irakoze', 'Male', '0788211579', 'blaise@gmail.com', '2020-11-14', 'no'),
-('cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', 'Sam', 'Umusaza', 'Male', '0788211579', 'sam@gmail.com', '2020-10-10', 'no');
+('295de526-5fcf-4316-b8f8-988424374e5d', 'Blaise', 'Irakoze', 'Male', '0788747121', 'blaise@gmail.com', '2020-11-14', 'no'),
+('cbe5dc87-6795-41f2-a3bf-8b0d074d74a1', 'Sam', 'Umusaza', 'Male', '0788747121', 'sam@gmail.com', '2020-10-10', 'no');
 
 -- --------------------------------------------------------
 
